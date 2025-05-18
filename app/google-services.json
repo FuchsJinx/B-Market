@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "318185902502",
+    "project_id": "coffee-books-8c6be",
+    "storage_bucket": "coffee-books-8c6be.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318185902502:android:775aaafef4eafa61f6ff67",
+        "android_client_info": {
+          "package_name": "com.karpeko.coffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "318185902502-fe0s6ottqeeafadilj0mqhhqv4u6eata.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfjQThMhjItIi0Ie6ByYdJx7BeNJRlShE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "318185902502-fe0s6ottqeeafadilj0mqhhqv4u6eata.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
