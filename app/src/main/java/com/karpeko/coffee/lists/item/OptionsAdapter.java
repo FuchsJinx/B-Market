@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.category;
+package com.karpeko.coffee.lists.item;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +41,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVi
     public void onBindViewHolder(@NonNull OptionViewHolder holder, int position) {
         String optionName = new ArrayList<>(options.keySet()).get(position);
 
-        holder.bind("Дополнительно", options.get(optionName));
+        holder.bind(optionName, options.get(optionName));
     }
 
     @Override
@@ -73,7 +73,10 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVi
             variantsGroup.setOnCheckedChangeListener((group, checkedId) -> {
                 RadioButton selected = itemView.findViewById(checkedId);
                 if (selected != null) {
-                    selectedOptions.put(optionName, selected.getText().toString());
+                    // Записываем выбранный вариант в список (с одним элементом)
+                    List<String> selectedList = new ArrayList<>();
+                    selectedList.add(selected.getText().toString());
+                    selectedOptions.put(optionName, String.valueOf(selectedList));
                 }
             });
         }

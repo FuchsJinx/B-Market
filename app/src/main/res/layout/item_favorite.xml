@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <!-- Изображение товара -->
+    <ImageView
+        android:id="@+id/imageViewItem"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Название товара -->
+    <TextView
+        android:id="@+id/textViewItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Название товара"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textColor="@android:color/black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/imageViewItem"
+        app:layout_constraintTop_toTopOf="@id/imageViewItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp"
+        android:textSize="18dp"/>
+
+    <!-- Цена товара -->
+    <TextView
+        android:id="@+id/textViewItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₽ 0"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="@color/teal_700"
+        app:layout_constraintStart_toStartOf="@id/textViewItemName"
+        app:layout_constraintTop_toBottomOf="@id/textViewItemName"
+        android:layout_marginTop="4dp"
+        android:textSize="14dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

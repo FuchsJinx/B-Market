@@ -1,17 +1,16 @@
 package com.karpeko.coffee.lists.category;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.karpeko.coffee.R;
+import com.karpeko.coffee.lists.item.MenuItem;
 
 import java.util.List;
 

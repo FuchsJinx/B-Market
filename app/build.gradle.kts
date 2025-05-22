@@ -47,6 +47,10 @@ dependencies {
     implementation("com.google.android.gms:play-services-base:18.3.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
+    implementation("com.google.firebase:firebase-auth:22.1.1") // проверьте актуальную версию
+    implementation("com.google.android.gms:play-services-auth:20.6.0") // Google Sign-In
+    implementation("com.google.firebase:firebase-database:20.2.2") // для Realtime Database
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -61,6 +65,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
     implementation(libs.activity)
+    implementation(libs.annotation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

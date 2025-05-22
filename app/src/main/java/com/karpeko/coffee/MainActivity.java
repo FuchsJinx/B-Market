@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.karpeko.coffee.databinding.ActivityMainBinding;
+import com.karpeko.coffee.ui.orders.OrderActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +54,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_menu) {
+                navController.navigate(R.id.nav_menu);
+            } else if (itemId == R.id.nav_orders) {
+                startActivity(new Intent(this, OrderActivity.class));
+            } else if (itemId == R.id.nav_account) {
+                navController.navigate(R.id.nav_account);
+            }
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        });
     }
 
     @Override

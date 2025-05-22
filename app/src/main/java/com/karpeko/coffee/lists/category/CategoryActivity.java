@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.base;
+package com.karpeko.coffee.lists.category;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.karpeko.coffee.R;
-import com.karpeko.coffee.lists.category.CategoryItemsAdapter;
-import com.karpeko.coffee.lists.category.ItemDetailActivity;
-import com.karpeko.coffee.lists.category.MenuItem;
+import com.karpeko.coffee.lists.item.ItemDetailActivity;
+import com.karpeko.coffee.lists.item.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;

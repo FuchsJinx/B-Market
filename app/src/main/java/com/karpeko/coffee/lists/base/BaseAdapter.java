@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.karpeko.coffee.R;
+import com.karpeko.coffee.lists.category.CategoryActivity;
 
 import java.util.List;
 

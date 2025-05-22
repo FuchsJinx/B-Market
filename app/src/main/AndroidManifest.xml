@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <meta-data
         android:name="com.google.android.gms.version"
@@ -19,14 +19,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CB"
         tools:targetApi="31">
-
         <activity
-            android:name=".lists.base.CategoryActivity"
+            android:name=".ui.orders.OrderActivity"
+            android:exported="false"
+            android:label="@string/title_activity_order_actvity" />
+        <activity
+            android:name=".ui.account.ForgotPasswordActivity"
             android:exported="false" />
-        <activity android:name=".lists.category.ItemDetailActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".account.RegistrationActivity"
+            android:exported="false" />
+        <activity android:name=".account.LoginActivity" />
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lists.category.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".lists.item.ItemDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".account.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.CB.NoActionBar">

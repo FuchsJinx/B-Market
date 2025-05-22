@@ -1,19 +1,20 @@
-package com.karpeko.coffee.lists.category;
+package com.karpeko.coffee.lists.item;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MenuItem {
 
     String id;
-    private String name;
+    public String name;
     private String category;
     private String description;
-    private int price;
+    public int price;
     private Map<String, List<String>> options; // Точное соответствие Firestore
-    private String imageUrl; // Добавьте это поле
+    public String imageUrl; // Добавьте это поле
     private String optionsName;
+
+    public MenuItem() {}
 
 
     public String getImageUrl() {
@@ -25,8 +26,6 @@ public class MenuItem {
     public Map<String, List<String>> getOptions() { return options; }
     public int getPrice() { return price; }
     // ... остальные геттеры
-
-
     public String getOptionsName() {
         return optionsName;
     }
