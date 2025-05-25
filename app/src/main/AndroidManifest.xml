@@ -34,10 +34,10 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".lists.category.CategoryActivity"
+            android:name=".ui.menu.lists.category.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".lists.item.ItemDetailActivity"
+            android:name=".ui.menu.lists.item.ItemDetailActivity"
             android:exported="false" />
         <activity
             android:name=".account.SplashActivity"

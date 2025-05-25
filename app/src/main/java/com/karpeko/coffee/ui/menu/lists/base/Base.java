@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.base;
+package com.karpeko.coffee.ui.menu.lists.base;
 
 public class Base {
     String category;

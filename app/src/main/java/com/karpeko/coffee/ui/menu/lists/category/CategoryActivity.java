@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.category;
+package com.karpeko.coffee.ui.menu.lists.category;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.karpeko.coffee.R;
-import com.karpeko.coffee.lists.item.ItemDetailActivity;
-import com.karpeko.coffee.lists.item.MenuItem;
+import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
+import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryItems
 
         // Настройка RecyclerView один раз при инициализации
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CategoryItemsAdapter(this, itemList, item -> {
+        adapter = new CategoryItemsAdapter(itemList, item -> {
             Intent intent = new Intent(this, ItemDetailActivity.class);
             intent.putExtra("item", item.getId()); // Передаем весь объект
             startActivity(intent);

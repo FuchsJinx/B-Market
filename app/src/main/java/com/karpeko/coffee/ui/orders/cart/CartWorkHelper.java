@@ -9,7 +9,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.karpeko.coffee.lists.item.MenuItem;
+import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.HashMap;
 import java.util.Map;

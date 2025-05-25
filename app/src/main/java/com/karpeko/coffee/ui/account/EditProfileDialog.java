@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.karpeko.coffee.R;
+import com.karpeko.coffee.account.UserSessionManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,12 +28,10 @@ public class EditProfileDialog extends Dialog {
 
     private EditText editTextUsername, editTextEmail, editTextNewPassword, editTextCurrentPassword;
     private Button buttonSave;
-
     private String currentUsername, currentEmail;
     private Context context;
-    private Task<Void> emailTask;
-    private Task<Void> passwordTask;
     private Activity activity;
+    private UserSessionManager sessionManager;
 
     public EditProfileDialog(@NonNull Context context, String username, String email, Activity activity) {
         super(context);
@@ -40,6 +39,7 @@ public class EditProfileDialog extends Dialog {
         this.currentUsername = username;
         this.currentEmail = email;
         this.activity = activity;
+        this.sessionManager = new UserSessionManager(context);
     }
 
     @Override
@@ -53,87 +53,101 @@ public class EditProfileDialog extends Dialog {
         editTextCurrentPassword = findViewById(R.id.editTextCurrentPassword);
         buttonSave = findViewById(R.id.buttonSave);
 
-        // Заполняем текущими данными
         editTextUsername.setText(currentUsername);
         editTextEmail.setText(currentEmail);
 
-        buttonSave.setOnClickListener(v -> saveChanges(activity));
+        buttonSave.setOnClickListener(v -> saveChanges());
     }
 
-    private void saveChanges(Activity activity) {
+    private void saveChanges() {
         String newUsername = editTextUsername.getText().toString().trim();
         String newEmail = editTextEmail.getText().toString().trim();
         String newPassword = editTextNewPassword.getText().toString();
         String currentPassword = editTextCurrentPassword.getText().toString();
 
         if (TextUtils.isEmpty(currentPassword)) {
-            Toast.makeText(context, "Введите текущий пароль для подтверждения", Toast.LENGTH_SHORT).show();
+            showToast("Введите текущий пароль для подтверждения");
             return;
         }
-
         if (TextUtils.isEmpty(newUsername)) {
-            Toast.makeText(context, "Имя пользователя не может быть пустым", Toast.LENGTH_SHORT).show();
+            showToast("Имя пользователя не может быть пустым");
             return;
         }
-
         if (TextUtils.isEmpty(newEmail)) {
-            Toast.makeText(context, "Email не может быть пустым", Toast.LENGTH_SHORT).show();
+            showToast("Email не может быть пустым");
             return;
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            Toast.makeText(context, "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
+            showToast("Пользователь не авторизован");
             dismiss();
             return;
         }
 
         AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(), currentPassword);
 
-        user.reauthenticate(credential).addOnCompleteListener(authTask -> {
-            if (authTask.isSuccessful()) {
-                // Обновляем email, если изменился
-                emailTask = Tasks.forResult(null);
-                if (!newEmail.equals(user.getEmail())) {
-                    emailTask = user.updateEmail(newEmail);
-                }
-
-                emailTask.addOnCompleteListener(emailUpdateTask -> {
-                    if (emailUpdateTask.isSuccessful()) {
-                        // Обновляем пароль, если задан
-                        passwordTask = Tasks.forResult(null);
-                        if (!TextUtils.isEmpty(newPassword)) {
-                            passwordTask = user.updatePassword(newPassword);
-                        }
-
-                        passwordTask.addOnCompleteListener(passwordUpdateTask -> {
-                            if (passwordUpdateTask.isSuccessful()) {
-                                // Обновляем username в Firestore
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                Map<String, Object> updates = new HashMap<>();
-                                updates.put("username", newUsername);
-
-                                db.collection("users").document(user.getUid())
-                                        .update(updates)
-                                        .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(context, "Профиль успешно обновлён", Toast.LENGTH_SHORT).show();
-                                            activity.recreate();
-                                            dismiss();
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(context, "Ошибка обновления имени пользователя", Toast.LENGTH_SHORT).show();
-                                        });
-                            } else {
-                                Toast.makeText(context, "Ошибка обновления пароля", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        Toast.makeText(context, "Ошибка обновления email", Toast.LENGTH_SHORT).show();
+        user.reauthenticate(credential)
+                .addOnCompleteListener(authTask -> {
+                    if (!authTask.isSuccessful()) {
+                        showToast("Неверный текущий пароль");
+                        return;
                     }
+                    updateEmailIfNeeded(user, newEmail)
+                            .continueWithTask(emailUpdateTask -> {
+                                if (!emailUpdateTask.isSuccessful()) {
+                                    throw emailUpdateTask.getException();
+                                }
+                                return updatePasswordIfNeeded(user, newPassword);
+                            })
+                            .continueWithTask(passwordUpdateTask -> {
+                                if (!passwordUpdateTask.isSuccessful()) {
+                                    throw passwordUpdateTask.getException();
+                                }
+                                return updateUsernameInFirestore(user.getUid(), newUsername);
+                            })
+                            .addOnSuccessListener(aVoid -> {
+                                showToast("Профиль успешно обновлён");
+                                // Обновляем сессию, если email изменился
+                                if (!newEmail.equalsIgnoreCase(currentEmail)) {
+                                    sessionManager.setUserLoggedIn(user.getUid());
+                                }
+                                activity.recreate();
+                                dismiss();
+                            })
+                            .addOnFailureListener(e -> {
+                                showToast("Ошибка обновления профиля: " + e.getMessage());
+                            });
                 });
-            } else {
-                Toast.makeText(context, "Неверный текущий пароль", Toast.LENGTH_SHORT).show();
+    }
+
+    private Task<Void> updateEmailIfNeeded(FirebaseUser user, String newEmail) {
+        if (!newEmail.equalsIgnoreCase(user.getEmail())) {
+            return user.updateEmail(newEmail);
+        } else {
+            return Tasks.forResult(null);
+        }
+    }
+
+    private Task<Void> updatePasswordIfNeeded(FirebaseUser user, String newPassword) {
+        if (!TextUtils.isEmpty(newPassword)) {
+            if (newPassword.length() < 6) {
+                throw new IllegalArgumentException("Пароль должен содержать не менее 6 символов");
             }
-        });
+            return user.updatePassword(newPassword);
+        } else {
+            return Tasks.forResult(null);
+        }
+    }
+
+    private Task<Void> updateUsernameInFirestore(String userId, String newUsername) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("username", newUsername);
+        return db.collection("users").document(userId).update(updates);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

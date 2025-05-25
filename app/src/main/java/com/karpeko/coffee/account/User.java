@@ -2,15 +2,12 @@ package com.karpeko.coffee.account;
 
 import com.google.firebase.Timestamp;
 import java.util.Calendar;
-import java.util.Date;
 
 public class User {
 
     private String username;
     private String email;
     private Timestamp createdAt;
-
-    Calendar calendar = Calendar.getInstance();
 
     public User(String username, String email) {
         this.username = username;

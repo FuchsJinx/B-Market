@@ -1,4 +1,4 @@
-package com.karpeko.coffee.ui.orders.order;
+package com.karpeko.coffee.ui.orders;
 
 import android.util.Log;
 
@@ -19,16 +19,25 @@ public class OrderWorkHelper {
     public void createOrder(String userId, double total, List<CartItem> cartItems, OnSuccessListener<String> listener) {
         String orderId = UUID.randomUUID().toString();
 
-        // Формируем данные заказа
-        Map<String, Object> orderData = new HashMap<>();
-        orderData.put("orderId", orderId);
-        orderData.put("userId", userId);
-        orderData.put("status", "Готовится"); // или другой статус
-        orderData.put("total", total);
-        orderData.put("createdAt", Timestamp.now());
-        orderData.put("completedAt", null);
+        // Создаём объект Order и заполняем его поля
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setUserId(userId);
+        order.setStatus("Создан"); // или другой статус
+        order.setTotal(total);
+        order.setCreatedAt(Timestamp.now());
+        order.setCompletedAt(null);
 
-        // Сохраняем заказ
+        // Преобразуем объект Order в Map для сохранения в Firestore
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("orderId", order.getOrderId());
+        orderData.put("userId", order.getUserId());
+        orderData.put("status", order.getStatus());
+        orderData.put("total", order.getTotal());
+        orderData.put("createdAt", order.getCreatedAt());
+        orderData.put("completedAt", order.getCompletedAt());
+
+        // Сохраняем заказ в Firestore
         db.collection("orders")
                 .document(orderId)
                 .set(orderData)
@@ -59,6 +68,4 @@ public class OrderWorkHelper {
                     .addOnFailureListener(e -> Log.e("Firestore", "Ошибка при добавлении позиции заказа", e));
         }
     }
-
 }
-

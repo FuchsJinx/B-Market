@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.item;
+package com.karpeko.coffee.ui.menu.lists.item;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -8,6 +8,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
         <ImageView
             android:id="@+id/item_image"
             android:layout_width="match_parent"
@@ -46,44 +53,5 @@
             android:id="@+id/favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <RadioGroup
-            android:id="@+id/radioGroupDelivery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp">
-
-            <RadioButton
-                android:id="@+id/radioDelivery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Доставка" />
-
-            <RadioButton
-                android:id="@+id/radioPickup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Самовывоз" />
-        </RadioGroup>
-
-        <!-- Поле для ввода адреса доставки -->
-        <EditText
-            android:id="@+id/editTextAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Введите адрес доставки"
-            android:visibility="gone"
-            android:inputType="textPostalAddress"
-            android:layout_marginTop="8dp" />
-
-        <!-- Спиннер или RecyclerView для выбора кофейни -->
-        <Spinner
-            android:id="@+id/spinnerCoffeeShops"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="8dp" />
-
     </LinearLayout>
 </ScrollView>

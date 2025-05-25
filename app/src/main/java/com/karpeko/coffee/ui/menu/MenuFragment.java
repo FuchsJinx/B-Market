@@ -11,15 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.karpeko.coffee.R;
-import com.karpeko.coffee.lists.base.Base;
-import com.karpeko.coffee.lists.base.BaseAdapter;
+import com.karpeko.coffee.ui.menu.lists.base.Base;
+import com.karpeko.coffee.ui.menu.lists.base.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuFragment extends Fragment {
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,5 +37,4 @@ public class MenuFragment extends Fragment {
 
         return view;
     }
-
 }

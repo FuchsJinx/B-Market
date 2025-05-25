@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.item;
+package com.karpeko.coffee.ui.menu.lists.item;
 
 import java.util.List;
 import java.util.Map;

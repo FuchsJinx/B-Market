@@ -1,4 +1,4 @@
-package com.karpeko.coffee.lists.base;
+package com.karpeko.coffee.ui.menu.lists.base;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.karpeko.coffee.R;
-import com.karpeko.coffee.lists.category.CategoryActivity;
+import com.karpeko.coffee.ui.menu.lists.category.CategoryActivity;
 
 import java.util.List;
 

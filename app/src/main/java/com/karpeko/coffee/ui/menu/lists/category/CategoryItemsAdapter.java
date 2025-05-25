@@ -1,6 +1,5 @@
-package com.karpeko.coffee.lists.category;
+package com.karpeko.coffee.ui.menu.lists.category;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,19 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.karpeko.coffee.R;
-import com.karpeko.coffee.lists.item.MenuItem;
+import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.List;
 
 public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdapter.CategoryItemViewHolder> {
 
     private final List<MenuItem> items;
-    private Context context;
     private OnItemClickListener listener;
 
-    public CategoryItemsAdapter(Context context, List<MenuItem> items, OnItemClickListener listener) {
+    public CategoryItemsAdapter(List<MenuItem> items, OnItemClickListener listener) {
         this.items = items;
-        this.context = context;
         this.listener = listener;
     }
 

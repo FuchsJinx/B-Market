@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.karpeko.coffee.R;
-import com.karpeko.coffee.lists.item.MenuItem;
+import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.List;
 import java.util.Map;

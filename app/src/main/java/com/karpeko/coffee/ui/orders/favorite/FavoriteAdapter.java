@@ -39,10 +39,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
         FavoriteItem item = favoriteItems.get(position);
 
-        // Здесь нужно вывести данные о товаре
-        // Предположим, что FavoriteItem содержит поля: itemName, itemPrice, itemImageUrl
-        // Если этих данных нет, нужно дополнительно загружать их из коллекции товаров по itemId
-
         holder.textViewItemName.setText(item.itemName != null ? item.itemName : "Название отсутствует");
         holder.textViewItemPrice.setText(item.itemPrice != null ? "₽ " + item.itemPrice : "Цена отсутствует");
 

@@ -1,12 +1,9 @@
 package com.karpeko.coffee.ui.account;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,29 +15,27 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.LoginActivity;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.karpeko.coffee.account.UserSessionManager;
 
 public class AccountFragment extends Fragment {
 
     private TextView textViewName, textViewEmail;
     private Button buttonLogout, forgotPassword;
     private ImageButton editAccountButton;
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private UserSessionManager sessionManager;
 
     @SuppressLint("MissingInflatedId")
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                         ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
         textViewName = view.findViewById(R.id.textViewName);
@@ -51,18 +46,49 @@ public class AccountFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        sessionManager = new UserSessionManager(requireContext());
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser == null || !sessionManager.isLoggedIn()) {
+            goToLogin();
+            return view;
+        }
+
         showUserInformation(currentUser);
 
-        editAccountButton.setOnClickListener(v -> {
-            openEditProfileDialog();
-        });
-        forgotPassword.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), ForgotPasswordActivity.class));
-        });
+        editAccountButton.setOnClickListener(v -> openEditProfileDialog());
+        forgotPassword.setOnClickListener(v -> openForgotPasswordDialog());
+
+        buttonLogout.setOnClickListener(v -> logout());
 
         return view;
+    }
+
+    private void showUserInformation(FirebaseUser currentUser) {
+        textViewEmail.setText(currentUser.getEmail());
+
+        String userId = sessionManager.getUserId();
+        if (userId == null) userId = currentUser.getUid();
+
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("username");
+                        textViewName.setText(!TextUtils.isEmpty(name) ? name : "Имя не указано");
+                    } else {
+                        textViewName.setText("Пользователь не найден");
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Ошибка загрузки данных пользователя", Toast.LENGTH_SHORT).show()
+                );
+    }
+
+    private void logout() {
+        mAuth.signOut();
+        sessionManager.clearSession();
+        goToLogin();
     }
 
     private void goToLogin() {
@@ -72,65 +98,21 @@ public class AccountFragment extends Fragment {
         requireActivity().finish();
     }
 
-    private void showUserInformation(FirebaseUser currentUser) {
-        if (currentUser != null) {
-            // Отобразим email из FirebaseUser
-            textViewEmail.setText(currentUser.getEmail());
-
-            // Получим userId из SharedPreferences, если нужно
-            SharedPreferences prefs = requireActivity().getSharedPreferences("accountPrefs", MODE_PRIVATE);
-            String userId = prefs.getString("userId", currentUser.getUid());
-
-            // Получаем дополнительные данные пользователя из Firestore
-            db.collection("users").document(userId).get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            String name = documentSnapshot.getString("username"); // или "name" в зависимости от структуры
-
-                            if (name != null && !name.isEmpty()) {
-                                textViewName.setText(name);
-                            } else {
-                                textViewName.setText("Имя не указано");
-                            }
-                        } else {
-                            textViewName.setText("Пользователь не найден");
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(getContext(), "Ошибка загрузки данных пользователя", Toast.LENGTH_SHORT).show();
-                    });
-        } else {
-            // Если пользователь не авторизован, отправляем на экран входа
-            goToLogin();
-        }
-
-        buttonLogout.setOnClickListener(v -> {
-            mAuth.signOut();
-
-            // Очистка SharedPreferences
-            SharedPreferences prefs = requireActivity().getSharedPreferences("accountPrefs", MODE_PRIVATE);
-            prefs.edit().clear().apply();
-
-            goToLogin();
-        });
-    }
-
     private void openEditProfileDialog() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
             Toast.makeText(getContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String userId = user.getUid();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("users").document(userId).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     String username = user.getDisplayName();
                     if (documentSnapshot.exists()) {
                         String firestoreUsername = documentSnapshot.getString("username");
-                        if (firestoreUsername != null && !firestoreUsername.isEmpty()) {
+                        if (!TextUtils.isEmpty(firestoreUsername)) {
                             username = firestoreUsername;
                         }
                     }
@@ -140,9 +122,19 @@ public class AccountFragment extends Fragment {
                     EditProfileDialog dialog = new EditProfileDialog(getContext(), username, email, requireActivity());
                     dialog.show();
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Ошибка загрузки данных пользователя", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Ошибка загрузки данных пользователя", Toast.LENGTH_SHORT).show()
+                );
     }
 
+    private void openForgotPasswordDialog() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            Toast.makeText(getContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ForgotPasswordDialog dialog = new ForgotPasswordDialog(requireContext());
+        dialog.show();
+    }
 }
