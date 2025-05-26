@@ -1,12 +1,20 @@
 package com.karpeko.coffee.ui.menu.lists.base;
 
 public class Base {
-    String category;
+    private String category;
+    private String imageUrl; // URL изображения категории
 
-    public Base(String category) {
+    public Base(String category, String imageUrl) {
         this.category = category;
+        this.imageUrl = imageUrl;
     }
 
-    public void setCategory(String category) {this.category = category;}
-    public String getCategory() {return this.category;}
+    public String getCategory() {
+        return category;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 }
+

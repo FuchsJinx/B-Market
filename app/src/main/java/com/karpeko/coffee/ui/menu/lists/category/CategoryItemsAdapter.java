@@ -13,6 +13,9 @@ import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.List;
 
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
+
 public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdapter.CategoryItemViewHolder> {
 
     private final List<MenuItem> items;
@@ -31,7 +34,7 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
     @Override
     public CategoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.menu_item, parent, false);
+                .inflate(R.layout.item_menu, parent, false);
         return new CategoryItemViewHolder(view);
     }
 
@@ -49,16 +52,30 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
     public class CategoryItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView nameTextView;
         private final TextView priceTextView;
+        private final ImageView imageView;
 
         public CategoryItemViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.itemName);
             priceTextView = itemView.findViewById(R.id.itemPrice);
+            imageView = itemView.findViewById(R.id.itemImage);
         }
 
         public void bind(MenuItem item) {
             nameTextView.setText(item.getName());
             priceTextView.setText(item.getPrice() + " руб.");
+
+            String imageUrl = item.getImageUrl(); // Предполагается, что в MenuItem есть getImageUrl()
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Glide.with(imageView.getContext())
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_launcher_foreground) // Заглушка
+                        .error(R.drawable.ic_launcher_background) // Ошибка загрузки
+                        .centerCrop()
+                        .into(imageView);
+            } else {
+                imageView.setImageResource(R.drawable.ic_launcher_foreground);
+            }
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {

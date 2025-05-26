@@ -5,66 +5,38 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
         android:text="Вход"
-        android:textStyle="bold"
-        android:textSize="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginTop="100dp"/>
+        style="@style/Title"/>
 
     <EditText
         android:id="@+id/emailText"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
+        style="@style/EditTextStyle"
         android:layout_marginTop="50dp"
         android:hint="Введите электронную почту" />
 
     <EditText
         android:id="@+id/passwordText"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        style="@style/EditTextStyle"
         android:hint="Введите пароль" />
 
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
         android:text="Войти"
-        android:layout_gravity="center"
         android:layout_marginTop="30dp"/>
 
     <Button
         android:id="@+id/loginWithGoogle"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="Войти через Google"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        style="@style/ButtonStyle"
+        android:text="Войти через Google"/>
 
     <TextView
         android:id="@+id/toRegistration"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
         android:text="Еще нет аккаунта? Зарегистрироваться"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:clickable="true"
-        android:focusable="true"/>
+        style="@style/ClickedText"/>
 
     <TextView
         android:id="@+id/loginOut"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
         android:text="Продолжить без аккаунта"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:clickable="true"
-        android:focusable="true"/>
+        style="@style/ClickedText"/>
 </LinearLayout>

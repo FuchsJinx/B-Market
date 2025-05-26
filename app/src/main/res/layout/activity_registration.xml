@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -8,67 +7,44 @@
     tools:context=".account.RegistrationActivity"
     android:orientation="vertical">
 
+    <TextView
+        style="@style/Title"
+        android:text="Регистрация"/>
+
     <EditText
         android:id="@+id/usernameText"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="160dp"
-        android:layout_gravity="center"
+        style="@style/EditTextStyle"
         android:hint="Введите имя"/>
 
     <EditText
         android:id="@+id/emailText"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        style="@style/EditTextStyle"
         android:inputType="textEmailAddress"
         android:hint="Введите электронную почту"/>
 
     <EditText
         android:id="@+id/passwordText"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        style="@style/EditTextStyle"
         android:inputType="textPassword"
         android:hint="Введите пароль"/>
 
     <Button
         android:id="@+id/registrationButton"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
         android:text="Зарегистрироваться"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        style="@style/ButtonStyle"/>
 
     <Button
         android:id="@+id/registrationWithGoogle"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
         android:text="Войти через Google"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        style="@style/ButtonStyle"/>
 
     <TextView
         android:id="@+id/toLogin"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:clickable="true"
-        android:focusable="true"
         android:text="Уже зарегистрированны? Войти"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        style="@style/ClickedText"/>
 
     <TextView
         android:id="@+id/loginOut"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:clickable="true"
-        android:focusable="true"
         android:text="Продолжить без аккаунта"
-        android:layout_gravity="center"
-        android:gravity="center"/>
+        style="@style/ClickedText"/>
 </LinearLayout>

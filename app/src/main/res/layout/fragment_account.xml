@@ -3,16 +3,28 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_container">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:src="@android:drawable/ic_menu_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Имя пользователя"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal" />
+        style="@style/Title"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textViewEmail"
@@ -20,25 +32,27 @@
         android:layout_height="wrap_content"
         android:text="email@example.com"
         android:layout_marginTop="8dp"
+        android:textSize="16sp"
         android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Выйти"
-        android:layout_marginTop="24dp" />
 
     <ImageButton
         android:id="@+id/editAccountButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_edit" />
+        style="@style/ButtonStyle"
+        android:src="@android:drawable/ic_menu_edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@color/transparent"/>
 
     <Button
+        android:id="@+id/buttonLogout"
+        style="@style/ButtonStyle"
+        android:text="Выйти из аккаунта"
+        android:layout_marginTop="24dp" />
+
+    <TextView
         android:id="@+id/forgotPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Восстановить пароль" />
+        style="@style/ClickedText"
+        android:text="Восстановить пароль"
+        android:layout_marginTop="100dp"/>
 
 </LinearLayout>
