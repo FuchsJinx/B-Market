@@ -36,6 +36,30 @@
             android:textSize="20sp"
             android:layout_marginTop="8dp" />
 
+        <TextView
+            android:id="@+id/itemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Описание"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"/>
+
+        <TextView
+            android:id="@+id/itemComposition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Состав"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/itemAllergens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Аллергены"
+            android:layout_marginTop="8dp"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/options_recycler"
             android:layout_width="match_parent"

@@ -14,6 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.databinding.ActivityOrderBinding;
+import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
 
 public class OrderActivity extends AppCompatActivity {
 

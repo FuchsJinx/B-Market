@@ -1,5 +1,7 @@
 package com.karpeko.coffee.ui.orders.favorite;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +10,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.firestore.FieldPath;
 import com.karpeko.coffee.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,123 +26,164 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.karpeko.coffee.account.UserSessionManager;
+import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
 import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class FavoriteFragment extends Fragment {
+public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItemClickListener {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    RecyclerView recyclerView;
-    FavoriteAdapter adapter;
-    UserSessionManager userSessionManager;
+    private RecyclerView recyclerView;
+    private FavoriteAdapter adapter;
+    private List<MenuItem> favoriteItems = new ArrayList<>();
+    private UserSessionManager userSessionManager;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-
         userSessionManager = new UserSessionManager(getContext());
 
         recyclerView = view.findViewById(R.id.recyclerViewFavorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FavoriteAdapter(new ArrayList<>());
+        adapter = new FavoriteAdapter(favoriteItems, this);
         recyclerView.setAdapter(adapter);
 
-        loadFavoriteItemsFromFirestore();
+        loadOnlyFavoriteItems(userSessionManager.getUserId());
 
         return view;
     }
 
-    private void loadFavoriteItemsFromFirestore() {
+    @SuppressLint("NotifyDataSetChanged")
+    private void loadFavorites() {
         String userId = userSessionManager.getUserId();
 
         if (userId == null) {
-            Log.w("FavoritesFragment", "userId не найден в SharedPreferences");
+            Toast.makeText(getContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Предполагается, что у вас есть коллекция "favorites", где хранятся избранные товары пользователя
         db.collection("favorites")
                 .whereEqualTo("userId", userId)
                 .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<FavoriteItem> favoriteItems = new ArrayList<>();
-                        List<String> itemIds = new ArrayList<>();
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    favoriteItems.clear();
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            FavoriteItem favorite = document.toObject(FavoriteItem.class);
-                            favoriteItems.add(favorite);
-                            itemIds.add(favorite.itemId);
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        List<String> itemIds = new ArrayList<>();
+                        for (var doc : queryDocumentSnapshots) {
+                            String itemId = doc.getString("itemId");
+                            if (itemId != null) {
+                                itemIds.add(itemId);
+                            }
                         }
 
                         if (itemIds.isEmpty()) {
-                            adapter.setFavoriteItems(new ArrayList<>());
                             adapter.notifyDataSetChanged();
                             return;
                         }
 
-                        Map<String, MenuItem> menuItemsMap = new HashMap<>();
-                        final int totalItems = itemIds.size();
-                        final int[] processedCount = {0};
-
-                        for (String itemId : itemIds) {
-                            db.collection("menu")
-                                    .document(itemId)
-                                    .get()
-                                    .addOnSuccessListener(documentSnapshot -> {
-                                        if (documentSnapshot.exists()) {
-                                            MenuItem menuItem = documentSnapshot.toObject(MenuItem.class);
-                                            menuItemsMap.put(itemId, menuItem);
-                                        } else {
-                                            Log.w("Firestore", "Документ menu с ID " + itemId + " не найден");
-                                        }
-
-                                        processedCount[0]++;
-                                        if (processedCount[0] == totalItems) {
-                                            // Все документы получены, объединяем данные
-                                            List<FavoriteItem> enrichedFavorites = new ArrayList<>();
-                                            for (FavoriteItem favorite : favoriteItems) {
-                                                MenuItem menuItem = menuItemsMap.get(favorite.itemId);
-                                                if (menuItem != null) {
-                                                    favorite.itemName = menuItem.getName();
-                                                    favorite.itemPrice = String.valueOf(menuItem.getPrice());
-                                                    favorite.itemImageUrl = menuItem.getImageUrl();
-                                                }
-                                                enrichedFavorites.add(favorite);
-                                            }
-                                            adapter.setFavoriteItems(enrichedFavorites);
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Log.w("Firestore", "Ошибка получения документа menu с ID " + itemId, e);
-                                        processedCount[0]++;
-                                        if (processedCount[0] == totalItems) {
-                                            // Обработка после всех запросов, даже если были ошибки
-                                            List<FavoriteItem> enrichedFavorites = new ArrayList<>();
-                                            for (FavoriteItem favorite : favoriteItems) {
-                                                MenuItem menuItem = menuItemsMap.get(favorite.itemId);
-                                                if (menuItem != null) {
-                                                    favorite.itemName = menuItem.getName();
-                                                    favorite.itemPrice = String.valueOf(menuItem.getPrice());
-                                                    favorite.itemImageUrl = menuItem.getImageUrl();
-                                                }
-                                                enrichedFavorites.add(favorite);
-                                            }
-                                            adapter.setFavoriteItems(enrichedFavorites);
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    });
-                        }
+                        // Загружаем сами товары по списку itemIds
+                        db.collection("menu")
+                                .whereIn(FieldPath.documentId(), itemIds)
+                                .get()
+                                .addOnSuccessListener(itemsSnapshot -> {
+                                    for (var itemDoc : itemsSnapshot) {
+                                        MenuItem item = itemDoc.toObject(MenuItem.class);
+                                        item.setId(itemDoc.getId());
+                                        favoriteItems.add(item);
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(getContext(), "Ошибка загрузки товаров: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
 
                     } else {
-                        Log.w("Firestore", "Ошибка получения избранного.", task.getException());
+                        adapter.notifyDataSetChanged();
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Ошибка загрузки избранного: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void loadOnlyFavoriteItems(String userId) {
+        FavoritesWorkHelper favoritesHelper = new FavoritesWorkHelper();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        favoritesHelper.getFavorites(userId, task -> {
+            if (task.isSuccessful() && task.getResult() != null) {
+                List<String> favoriteItemIds = new ArrayList<>();
+                for (var doc : task.getResult().getDocuments()) {
+                    String itemId = doc.getString("itemId");
+                    if (itemId != null) {
+                        favoriteItemIds.add(itemId);
+                    }
+                }
+
+                if (favoriteItemIds.isEmpty()) {
+                    // Нет избранных, очищаем список и обновляем адаптер
+                    favoriteItems.clear();
+                    adapter.notifyDataSetChanged();
+                    return;
+                }
+
+                favoriteItems.clear();
+
+                // Firestore ограничивает whereIn до 10 элементов
+                int batchSize = 10;
+                int totalBatches = (favoriteItemIds.size() + batchSize - 1) / batchSize;
+
+                for (int i = 0; i < totalBatches; i++) {
+                    int start = i * batchSize;
+                    int end = Math.min(start + batchSize, favoriteItemIds.size());
+                    List<String> batchIds = favoriteItemIds.subList(start, end);
+
+                    db.collection("menu")
+                            .whereIn(FieldPath.documentId(), batchIds)
+                            .get()
+                            .addOnSuccessListener(querySnapshot -> {
+                                for (var doc : querySnapshot.getDocuments()) {
+                                    MenuItem item = doc.toObject(MenuItem.class);
+                                    item.setId(doc.getId());
+                                    item.setChecked(true); // т.к. это избранное
+                                    favoriteItems.add(item);
+                                }
+                                adapter.notifyDataSetChanged();
+                            })
+                            .addOnFailureListener(e -> {
+                                // Обработка ошибки загрузки
+                                adapter.notifyDataSetChanged();
+                            });
+                }
+            } else {
+                // Обработка ошибки загрузки избранного
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(MenuItem item) {
+        Intent intent = new Intent(getContext(), ItemDetailActivity.class);
+        intent.putExtra("item", item.getId());
+        startActivity(intent);
+        adapter.notifyDataSetChanged();
+        requireActivity().finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

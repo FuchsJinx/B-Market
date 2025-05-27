@@ -1,6 +1,7 @@
 package com.karpeko.coffee.ui.menu.lists.item;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.UserSessionManager;
+import com.karpeko.coffee.ui.orders.OrderActivity;
 import com.karpeko.coffee.ui.orders.cart.CartItem;
 import com.karpeko.coffee.ui.orders.cart.CartWorkHelper;
 import com.karpeko.coffee.ui.orders.favorite.FavoritesWorkHelper;
@@ -41,6 +43,11 @@ public class ItemDetailActivity extends AppCompatActivity {
     private CartWorkHelper cartWorkHelper;
     private FavoritesWorkHelper favoritesWorkHelper;
     private UserSessionManager sessionManager;
+
+    private TextView descriptionView;
+    private TextView compositionView;
+    private TextView allergensView;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -113,6 +120,10 @@ public class ItemDetailActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.item_image);
         TextView nameView = findViewById(R.id.item_name);
         TextView priceView = findViewById(R.id.item_price);
+        descriptionView = findViewById(R.id.itemDescription);
+        compositionView = findViewById(R.id.itemComposition);
+        allergensView = findViewById(R.id.itemAllergens);
+
 
         Glide.with(this)
                 .load(item.getImageUrl())
@@ -122,6 +133,9 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         nameView.setText(item.getName());
         priceView.setText(item.getPrice() + "₽");
+        descriptionView.setText(item.getDescription() != null ? item.getDescription() : "Нет описания");
+        compositionView.setText(item.getComposition() != null ? "Состав: " + item.getComposition() : "Состав не указан");
+        allergensView.setText(item.getAllergens() != null ? "Аллергены: " + item.getAllergens() : "Нет информации об аллергенах");
 
         adapter = new OptionsAdapter();
         optionsRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -151,6 +165,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         cartWorkHelper.addOrUpdateCartItem(userId, cartItem, item);
         Toast.makeText(this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, OrderActivity.class));
     }
 
     public static HashMap<String, List<String>> convert(Map<String, String> sourceMap) {
@@ -165,6 +180,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (!sessionManager.isLoggedIn()) {
             Toast.makeText(this, "Войдите в аккаунт, чтобы добавить в избранное", Toast.LENGTH_SHORT).show();
             favorite.setChecked(false);
+            item.setChecked(false);
             return;
         }
 
@@ -172,6 +188,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (userId == null) {
             Toast.makeText(this, "Ошибка пользователя, попробуйте войти снова", Toast.LENGTH_SHORT).show();
             favorite.setChecked(false);
+            item.setChecked(false);
             return;
         }
 
@@ -189,6 +206,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (!sessionManager.isLoggedIn()) {
             Toast.makeText(this, "Войдите в аккаунт, чтобы удалить из избранного", Toast.LENGTH_SHORT).show();
             favorite.setChecked(true);
+            item.setChecked(true);
             return;
         }
 
@@ -196,6 +214,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (userId == null) {
             Toast.makeText(this, "Ошибка пользователя, попробуйте войти снова", Toast.LENGTH_SHORT).show();
             favorite.setChecked(true);
+            item.setChecked(true);
             return;
         }
 

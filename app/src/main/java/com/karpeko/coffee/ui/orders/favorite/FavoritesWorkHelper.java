@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.HashMap;
 import java.util.Map;

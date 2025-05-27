@@ -13,6 +13,9 @@ public class MenuItem {
     private Map<String, List<String>> options; // Точное соответствие Firestore
     public String imageUrl; // Добавьте это поле
     private String optionsName;
+    private String composition;
+    private String allergens;
+    private boolean checked; // состояние чекбокса
 
     public MenuItem() {}
 
@@ -36,5 +39,41 @@ public class MenuItem {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getAllergens() {
+        return allergens;
+    }
+
+    public void setAllergens(String allergens) {
+        this.allergens = allergens;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getComposition() {
+        return composition;
+    }
+
+    public void setComposition(String composition) {
+        this.composition = composition;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }
