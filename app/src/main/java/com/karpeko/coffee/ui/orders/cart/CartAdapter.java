@@ -19,9 +19,15 @@ import java.util.Map;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private List<CartItem> cartItems;
+    private OnItemClickListener listener;
 
-    public CartAdapter(List<CartItem> cartItems) {
+    public interface OnItemClickListener {
+        void onItemClick(CartItem item);
+    }
+
+    public CartAdapter(List<CartItem> cartItems, OnItemClickListener listener) {
         this.cartItems = cartItems;
+        this.listener = listener;
     }
 
     public void setCartItems(List<CartItem> newItems) {
@@ -40,6 +46,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CartItem item = cartItems.get(position);
         holder.bind(item);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null && position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(item);
+            }
+        });
     }
 
     @Override
@@ -57,39 +69,39 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             textQuantity = itemView.findViewById(R.id.textQuantity);
             textOptions = itemView.findViewById(R.id.textOptions);
         }
-public void bind(CartItem item) {
-    FirebaseFirestore.getInstance()
-            .collection("menu")
-            .document(item.itemId)
-            .get()
-            .addOnSuccessListener(document -> {
-                MenuItem menuItem = document.toObject(MenuItem.class);
-                if (menuItem != null) {
-                    textItemName.setText(menuItem.getName());
-                } else {
-                    textItemName.setText("Название не найдено");
-                }
-                textQuantity.setText("Количество: " + item.quantity);
 
-                if (item.customizations != null && !item.customizations.isEmpty()) {
-                    StringBuilder optionsBuilder = new StringBuilder("Опции: ");
-                    for (Map.Entry<String, List<String>> entry : item.customizations.entrySet()) {
-                        optionsBuilder.append(entry.getKey())
-                                .append(": ")
-                                .append(TextUtils.join(", ", entry.getValue()))
-                                .append("; ");
-                    }
-                    textOptions.setText(optionsBuilder.toString());
-                } else {
-                    textOptions.setText("Опции отсутствуют");
-                }
-            })
-            .addOnFailureListener(e -> {
-                textItemName.setText("Ошибка загрузки названия");
-                textQuantity.setText("Количество: " + item.quantity);
-                textOptions.setText("Опции отсутствуют");
-            });
+        public void bind(CartItem item) {
+            FirebaseFirestore.getInstance()
+                    .collection("menu")
+                    .document(item.getItemId())
+                    .get()
+                    .addOnSuccessListener(document -> {
+                        MenuItem menuItem = document.toObject(MenuItem.class);
+                        if (menuItem != null) {
+                            textItemName.setText(menuItem.getName());
+                        } else {
+                            textItemName.setText("Название не найдено");
+                        }
+                        textQuantity.setText("Количество: " + item.quantity);
+
+                        if (item.customizations != null && !item.customizations.isEmpty()) {
+                            StringBuilder optionsBuilder = new StringBuilder("Опции: ");
+                            for (Map.Entry<String, List<String>> entry : item.customizations.entrySet()) {
+                                optionsBuilder.append(entry.getKey())
+                                        .append(": ")
+                                        .append(TextUtils.join(", ", entry.getValue()))
+                                        .append("; ");
+                            }
+                            textOptions.setText(optionsBuilder.toString());
+                        } else {
+                            textOptions.setText("Опции отсутствуют");
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        textItemName.setText("Ошибка загрузки названия");
+                        textQuantity.setText("Количество: " + item.quantity);
+                        textOptions.setText("Опции отсутствуют");
+                    });
         }
     }
 }
-

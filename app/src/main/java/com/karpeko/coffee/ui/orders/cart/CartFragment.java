@@ -1,12 +1,14 @@
 package com.karpeko.coffee.ui.orders.cart;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +21,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.UserSessionManager;
+import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
+import com.karpeko.coffee.ui.menu.lists.item.ItemEditActivity;
 import com.karpeko.coffee.ui.orders.OrderWorkHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements CartAdapter.OnItemClickListener {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     RecyclerView recyclerView;
@@ -32,6 +36,8 @@ public class CartFragment extends Fragment {
     Button buttonOrder;
     CartWorkHelper cartWorkHelper;
     UserSessionManager userSessionManager;
+    CartItem cartItem;
+    private TextView textTotal;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -42,15 +48,14 @@ public class CartFragment extends Fragment {
 
         cartWorkHelper = new CartWorkHelper();
 
+        textTotal = view.findViewById(R.id.textTotal);
         buttonOrder = view.findViewById(R.id.buttonOrder);
         recyclerView = view.findViewById(R.id.recyclerViewCart);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Инициализируем адаптер пустым списком
-        adapter = new CartAdapter(new ArrayList<>());
+        adapter = new CartAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
 
-        // Загружаем данные из Firestore
         loadCartItemsFromFirestore();
 
         buttonOrder.setOnClickListener(v -> makeOrder());
@@ -73,19 +78,28 @@ public class CartFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<CartItem> cartItems = new ArrayList<>();
+                        double total = 0;
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            CartItem item = document.toObject(CartItem.class);
-                            cartItems.add(item);
+                            cartItem = document.toObject(CartItem.class);
+                            if (cartItem == null) {
+                                Log.e("CartFragment", "cartItem == null! documentId: " + document.getId());
+                                continue;
+                            }
+                            cartItem.setCartItemId(document.getId());
+                            cartItems.add(cartItem);
+                            total += cartItem.getPrice() * cartItem.quantity;
                         }
-                        // Обновляем данные в адаптере
                         adapter.setCartItems(cartItems);
+                        textTotal.setText("Итого: " + ((int) total) + " ₽");
                     } else {
                         Log.w("Firestore", "Ошибка получения данных.", task.getException());
                     }
                 });
     }
 
+
     private void makeOrder() {
+        // Ваш существующий код оформления заказа
         boolean isLoggedIn = userSessionManager.isLoggedIn();
         if (!isLoggedIn) {
             Toast.makeText(getContext(), "Войдите в аккаунт для оформления заказа", Toast.LENGTH_SHORT).show();
@@ -105,8 +119,8 @@ public class CartFragment extends Fragment {
                     if (task.isSuccessful()) {
                         List<CartItem> cartItemsInDatabase = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            CartItem item = document.toObject(CartItem.class);
-                            cartItemsInDatabase.add(item);
+                            cartItem = document.toObject(CartItem.class);
+                            cartItemsInDatabase.add(cartItem);
                         }
 
                         if (cartItemsInDatabase.isEmpty()) {
@@ -151,5 +165,19 @@ public class CartFragment extends Fragment {
                         Toast.makeText(getContext(), "Ошибка загрузки корзины", Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
+
+    @Override
+    public void onItemClick(CartItem item) {
+        Intent intent = new Intent(getContext(), ItemEditActivity.class);
+        intent.putExtra("item", item.getItemId()); // <-- Должно быть именно item.getItemId()
+        intent.putExtra("cartItemId", item.cartItemId);
+        // (если нужно) intent.putExtra("selectedOptions", ...);
+        intent.putExtra("price", cartItem.getPrice());
+        intent.putExtra("quantity", cartItem.quantity);
+        intent.putExtra("cartId", cartItem.cartId);
+        startActivity(intent);
+    }
+
 }

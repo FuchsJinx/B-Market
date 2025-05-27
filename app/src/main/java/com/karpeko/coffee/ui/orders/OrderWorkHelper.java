@@ -56,7 +56,7 @@ public class OrderWorkHelper {
             Map<String, Object> orderItemData = new HashMap<>();
             orderItemData.put("orderItemId", orderItemId);
             orderItemData.put("orderId", orderId);
-            orderItemData.put("itemId", cartItem.itemId);
+            orderItemData.put("itemId", cartItem.getItemId());
             orderItemData.put("quantity", cartItem.quantity);
             orderItemData.put("customizations", cartItem.customizations);
             orderItemData.put("priceSnapshot", cartItem.getPrice()); // предполагается, что в CartItem есть поле price

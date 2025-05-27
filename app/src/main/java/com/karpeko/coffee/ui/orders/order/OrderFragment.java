@@ -1,5 +1,6 @@
 package com.karpeko.coffee.ui.orders.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class OrderFragment extends Fragment {
+public class OrderFragment extends Fragment implements OrdersAdapter.OnOrderClickListener {
 
     RecyclerView recyclerView;
     OrdersAdapter adapter;
@@ -36,10 +37,7 @@ public class OrderFragment extends Fragment {
         userSessionManager = new UserSessionManager(getContext());
 
         recyclerView = view.findViewById(R.id.recyclerViewOrders);
-        adapter = new OrdersAdapter(new ArrayList<>(), order -> {
-            // Обработка клика по заказу
-            Toast.makeText(getContext(), "Выбран заказ: " + order.getOrderId(), Toast.LENGTH_SHORT).show();
-        });
+        adapter = new OrdersAdapter(new ArrayList<>(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
@@ -72,5 +70,13 @@ public class OrderFragment extends Fragment {
                     Log.e("Firestore", "Ошибка загрузки активных заказов", e);
                     Toast.makeText(getContext(), "Ошибка загрузки заказов", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    @Override
+    public void onOrderClick(Order order) {
+        Intent intent = new Intent(getContext(), OrderReceiptActivity.class);
+        intent.putExtra("orderId", order.getOrderId());
+        intent.putExtra("userId", order.getUserId());
+        getContext().startActivity(intent);
     }
 }

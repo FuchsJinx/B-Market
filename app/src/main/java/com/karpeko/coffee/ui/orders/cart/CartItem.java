@@ -6,7 +6,7 @@ import java.util.Map;
 public class CartItem {
     public String cartItemId;
     public String cartId;
-    public String itemId;
+    private String itemId;
     public int quantity;
     public Map<String, List<String>> customizations;
 
@@ -25,6 +25,18 @@ public class CartItem {
 
     public int getPrice() {
         return price;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setCartItemId(String cartItemId) {
+        this.cartItemId = cartItemId;
     }
 }
 

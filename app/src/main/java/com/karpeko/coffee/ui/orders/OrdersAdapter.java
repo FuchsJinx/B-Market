@@ -43,6 +43,12 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = orders.get(position);
         holder.bind(order);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null && position != RecyclerView.NO_POSITION) {
+                listener.onOrderClick(order);
+            }
+        });
     }
 
     @Override
@@ -60,12 +66,6 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvDate = itemView.findViewById(R.id.tvDate);
             tvTotal = itemView.findViewById(R.id.tvTotal);
-
-            itemView.setOnClickListener(v -> {
-                if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                    listener.onOrderClick(orders.get(getAdapterPosition()));
-                }
-            });
         }
 
         void bind(Order order) {

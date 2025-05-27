@@ -37,7 +37,7 @@ public class CartWorkHelper {
                 .collection("cart_items");
 
         // Проверяем, есть ли такой товар с такими же опциями
-        itemsRef.whereEqualTo("itemId", item.itemId)
+        itemsRef.whereEqualTo("itemId", item.getItemId())
                 .whereEqualTo("customizations", item.customizations)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -52,7 +52,7 @@ public class CartWorkHelper {
                         Map<String, Object> itemData = new HashMap<>();
                         itemData.put("cartItemId", cartItemId);
                         itemData.put("cartId", userId);
-                        itemData.put("itemId", item.itemId);
+                        itemData.put("itemId", item.getItemId());
                         itemData.put("quantity", 1);
                         itemData.put("customizations", item.customizations);
                         itemData.put("price", menuItem.getPrice());

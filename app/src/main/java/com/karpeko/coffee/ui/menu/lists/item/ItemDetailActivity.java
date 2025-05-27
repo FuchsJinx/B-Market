@@ -3,6 +3,7 @@ package com.karpeko.coffee.ui.menu.lists.item;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class ItemDetailActivity extends AppCompatActivity {
 
@@ -48,8 +50,6 @@ public class ItemDetailActivity extends AppCompatActivity {
     private TextView compositionView;
     private TextView allergensView;
 
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +71,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         favorite = findViewById(R.id.favorite);
 
         addToCartButton.setOnClickListener(v -> addToCart());
+        Log.d("ID", itemId);
 
         setupFavoriteCheckbox();
 
@@ -80,7 +81,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private void setupFavoriteCheckbox() {
         boolean isFavorite = sessionManager.isFavorite(itemId);
 
-        favorite.setOnCheckedChangeListener(null); // отключаем слушатель, чтобы избежать рекурсии
+        favorite.setOnCheckedChangeListener(null);
         favorite.setChecked(isFavorite);
 
         favorite.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -124,7 +125,6 @@ public class ItemDetailActivity extends AppCompatActivity {
         compositionView = findViewById(R.id.itemComposition);
         allergensView = findViewById(R.id.itemAllergens);
 
-
         Glide.with(this)
                 .load(item.getImageUrl())
                 .placeholder(R.drawable.ic_launcher_foreground)
@@ -137,10 +137,10 @@ public class ItemDetailActivity extends AppCompatActivity {
         compositionView.setText(item.getComposition() != null ? "Состав: " + item.getComposition() : "Состав не указан");
         allergensView.setText(item.getAllergens() != null ? "Аллергены: " + item.getAllergens() : "Нет информации об аллергенах");
 
-        adapter = new OptionsAdapter();
+        adapter = new OptionsAdapter(item.getOptions());
         optionsRecycler.setLayoutManager(new LinearLayoutManager(this));
         optionsRecycler.setAdapter(adapter);
-        adapter.setOptions(item.getOptions());
+//        adapter.setOptions(item.getOptions());
     }
 
     private void addToCart() {
@@ -154,18 +154,24 @@ public class ItemDetailActivity extends AppCompatActivity {
             return;
         }
 
+        // Обновляем корзину (создаём или обновляем)
         cartWorkHelper.addOrUpdateCart(userId, Timestamp.now());
 
+        // Формируем уникальный ID для CartItem, учитывая опции, чтобы избежать конфликтов
+        String cartItemId = UUID.randomUUID().toString();
+
         CartItem cartItem = new CartItem(
-                item.getId() + "_" + userId,
+                cartItemId,
                 userId,
                 itemId,
                 convert(adapter.getSelectedOptions())
         );
 
         cartWorkHelper.addOrUpdateCartItem(userId, cartItem, item);
+
         Toast.makeText(this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, OrderActivity.class));
+        finish();
     }
 
     public static HashMap<String, List<String>> convert(Map<String, String> sourceMap) {

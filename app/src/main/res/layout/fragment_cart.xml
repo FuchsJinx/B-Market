@@ -25,6 +25,18 @@
         android:clipToPadding="false"
         android:paddingBottom="8dp" />
 
+    <TextView
+        android:id="@+id/textTotal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Итого: 0 ₽"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="end"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"/>
+
+
     <!-- Кнопка оформить заказ -->
     <Button
         android:id="@+id/buttonOrder"

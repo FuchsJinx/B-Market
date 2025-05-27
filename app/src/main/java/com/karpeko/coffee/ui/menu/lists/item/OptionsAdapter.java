@@ -16,12 +16,51 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionViewHolder> {
-    private Map<String, List<String>> options;
-    private Map<String, String> selectedOptions = new HashMap<>();
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-    public void setOptions(Map<String, List<String>> options) {
-        this.options = options;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.karpeko.coffee.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionViewHolder> {
+
+    private final List<String> groupNames;
+    private final Map<String, List<String>> optionsMap;
+    private final Map<String, String> selectedOptions = new HashMap<>();
+
+    public OptionsAdapter(Map<String, List<String>> optionsMap) {
+        this.optionsMap = optionsMap;
+        this.groupNames = new ArrayList<>(optionsMap.keySet());
+
+        for (String group : groupNames) {
+            List<String> values = optionsMap.get(group);
+            if (values != null && !values.isEmpty()) {
+                selectedOptions.put(group, values.get(0));
+            }
+        }
+    }
+
+    public void setSelectedOptions(Map<String, String> selectedOptionsFromIntent) {
+        for (Map.Entry<String, String> entry : selectedOptionsFromIntent.entrySet()) {
+            if (optionsMap.containsKey(entry.getKey())) {
+                List<String> values = optionsMap.get(entry.getKey());
+                if (values.contains(entry.getValue())) {
+                    selectedOptions.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -32,52 +71,55 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVi
     @NonNull
     @Override
     public OptionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_option, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.option_item, parent, false);
         return new OptionViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull OptionViewHolder holder, int position) {
-        String optionName = new ArrayList<>(options.keySet()).get(position);
-
-        holder.bind(optionName, options.get(optionName));
+        String groupName = groupNames.get(position);
+        List<String> values = optionsMap.get(groupName);
+        holder.bind(groupName, values);
     }
 
     @Override
     public int getItemCount() {
-        return options != null ? options.size() : 0;
+        return groupNames.size();
     }
 
-    class OptionViewHolder extends RecyclerView.ViewHolder {
-        private TextView optionTitle;
-        private RadioGroup variantsGroup;
+    public class OptionViewHolder extends RecyclerView.ViewHolder {
+        TextView groupNameTextView;
+        Spinner spinner;
 
-        public OptionViewHolder(View itemView) {
+        public OptionViewHolder(@NonNull View itemView) {
             super(itemView);
-            optionTitle = itemView.findViewById(R.id.option_name);
-            variantsGroup = itemView.findViewById(R.id.variants_group);
+            groupNameTextView = itemView.findViewById(R.id.optionGroupName);
+            spinner = itemView.findViewById(R.id.optionSpinner);
         }
 
-        public void bind(String optionName, List<String> variants) {
-            optionTitle.setText(optionName);
-            variantsGroup.removeAllViews();
-            variantsGroup.setOnCheckedChangeListener(null);
+        public void bind(String groupName, List<String> values) {
+            groupNameTextView.setText(groupName);
 
-            for (String variant : variants) {
-                RadioButton radioButton = new RadioButton(itemView.getContext());
-                radioButton.setText(variant);
-                variantsGroup.addView(radioButton);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(itemView.getContext(),
+                    android.R.layout.simple_spinner_item, values);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            // Устанавливаем выбранный вариант, если есть
+            String selectedValue = selectedOptions.get(groupName);
+            if (selectedValue != null) {
+                int index = values.indexOf(selectedValue);
+                if (index >= 0) spinner.setSelection(index);
             }
 
-            variantsGroup.setOnCheckedChangeListener((group, checkedId) -> {
-                RadioButton selected = itemView.findViewById(checkedId);
-                if (selected != null) {
-                    // Записываем выбранный вариант в список (с одним элементом)
-                    List<String> selectedList = new ArrayList<>();
-                    selectedList.add(selected.getText().toString());
-                    selectedOptions.put(optionName, String.valueOf(selectedList));
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    selectedOptions.put(groupName, values.get(position));
                 }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
             });
         }
     }
