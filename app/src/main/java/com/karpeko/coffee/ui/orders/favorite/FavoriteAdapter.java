@@ -18,75 +18,6 @@ import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.List;
 
-//public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
-//
-//    private List<MenuItem> favoriteItems;
-//    private OnItemClickListener listener;
-//
-//    public interface OnItemClickListener {
-//        void onItemClick(MenuItem item);
-//    }
-//
-//    public FavoriteAdapter(List<MenuItem> favoriteItems, OnItemClickListener listener) {
-//        this.favoriteItems = favoriteItems;
-//        this.listener = listener;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public FavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite, parent, false);
-//        return new FavoriteViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
-//        MenuItem item = favoriteItems.get(position);
-//        holder.bind(item);
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return favoriteItems.size();
-//    }
-//
-//    class FavoriteViewHolder extends RecyclerView.ViewHolder {
-//        TextView nameTextView;
-//        ImageView imageViewItem;
-//        TextView textViewItemPrice;
-//
-//        public FavoriteViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            nameTextView = itemView.findViewById(R.id.textViewItemName);
-//            imageViewItem = itemView.findViewById(R.id.imageViewItem);
-//            textViewItemPrice = itemView.findViewById(R.id.textViewItemPrice);
-//        }
-//
-//        public void bind(MenuItem item) {
-//            nameTextView.setText(item.getName());
-//            textViewItemPrice.setText(item.getPrice() + " руб.");
-//
-//            String imageUrl = item.getImageUrl();
-//            if (imageUrl != null && !imageUrl.isEmpty()) {
-//                Glide.with(imageViewItem.getContext())
-//                        .load(imageUrl)
-//                        .placeholder(R.drawable.ic_launcher_foreground) // Заглушка
-//                        .error(R.drawable.ic_launcher_background) // Ошибка загрузки
-//                        .centerCrop()
-//                        .into(imageViewItem);
-//            } else {
-//                imageViewItem.setImageResource(R.drawable.ic_launcher_foreground);
-//            }
-//
-//            itemView.setOnClickListener(v -> {
-//                if (listener != null) {
-//                    listener.onItemClick(item);
-//                }
-//            });
-//        }
-//    }
-//}
-
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
 
     private List<MenuItem> favoriteItems;
@@ -100,6 +31,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         this.favoriteItems = favoriteItems;
         this.listener = listener;
     }
+
+    public void setFavoriteItems(List<MenuItem> newItems) {
+        this.favoriteItems = newItems;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

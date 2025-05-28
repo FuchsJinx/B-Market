@@ -67,33 +67,29 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
         String userId = userSessionManager.getUserId();
 
         if (userId == null) {
-            Log.w("CartFragment", "userId не найден в SharedPreferences");
+            Log.w("CartFragment", "userId не найден");
             return;
         }
 
         db.collection("carts")
                 .document(userId)
                 .collection("cart_items")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        List<CartItem> cartItems = new ArrayList<>();
-                        double total = 0;
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            cartItem = document.toObject(CartItem.class);
-                            if (cartItem == null) {
-                                Log.e("CartFragment", "cartItem == null! documentId: " + document.getId());
-                                continue;
-                            }
-                            cartItem.setCartItemId(document.getId());
-                            cartItems.add(cartItem);
-                            total += cartItem.getPrice() * cartItem.quantity;
-                        }
-                        adapter.setCartItems(cartItems);
-                        textTotal.setText("Итого: " + ((int) total) + " ₽");
-                    } else {
-                        Log.w("Firestore", "Ошибка получения данных.", task.getException());
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.w("Firestore", "Listen failed.", error);
+                        return;
                     }
+
+                    List<CartItem> cartItems = new ArrayList<>();
+                    double total = 0;
+                    for (QueryDocumentSnapshot document : value) {
+                        CartItem cartItem = document.toObject(CartItem.class);
+                        cartItem.setCartItemId(document.getId()); // обязательно!
+                        cartItems.add(cartItem);
+                        total += cartItem.getPrice() * cartItem.quantity;
+                    }
+                    adapter.setCartItems(cartItems);
+                    textTotal.setText("Итого: " + ((int) total) + " ₽");
                 });
     }
 
@@ -157,7 +153,6 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
                                     Log.e("CartClear", "Ошибка очистки корзины", e);
                                 }
                             });
-                            requireActivity().finish(); //TODO: придумать получше вариант
                         });
 
                     } else {
@@ -174,9 +169,9 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
         intent.putExtra("item", item.getItemId()); // <-- Должно быть именно item.getItemId()
         intent.putExtra("cartItemId", item.cartItemId);
         // (если нужно) intent.putExtra("selectedOptions", ...);
-        intent.putExtra("price", cartItem.getPrice());
-        intent.putExtra("quantity", cartItem.quantity);
-        intent.putExtra("cartId", cartItem.cartId);
+        intent.putExtra("price", item.getPrice());
+        intent.putExtra("quantity", item.quantity);
+        intent.putExtra("cartId", item.cartId);
         startActivity(intent);
     }
 

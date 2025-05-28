@@ -54,68 +54,12 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
         adapter = new FavoriteAdapter(favoriteItems, this);
         recyclerView.setAdapter(adapter);
 
-        loadOnlyFavoriteItems(userSessionManager.getUserId());
+//        loadOnlyFavoriteItems(userSessionManager.getUserId());
 
         return view;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void loadFavorites() {
-        String userId = userSessionManager.getUserId();
-
-        if (userId == null) {
-            Toast.makeText(getContext(), "Пользователь не авторизован", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Предполагается, что у вас есть коллекция "favorites", где хранятся избранные товары пользователя
-        db.collection("favorites")
-                .whereEqualTo("userId", userId)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    favoriteItems.clear();
-
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        List<String> itemIds = new ArrayList<>();
-                        for (var doc : queryDocumentSnapshots) {
-                            String itemId = doc.getString("itemId");
-                            if (itemId != null) {
-                                itemIds.add(itemId);
-                            }
-                        }
-
-                        if (itemIds.isEmpty()) {
-                            adapter.notifyDataSetChanged();
-                            return;
-                        }
-
-                        // Загружаем сами товары по списку itemIds
-                        db.collection("menu")
-                                .whereIn(FieldPath.documentId(), itemIds)
-                                .get()
-                                .addOnSuccessListener(itemsSnapshot -> {
-                                    for (var itemDoc : itemsSnapshot) {
-                                        MenuItem item = itemDoc.toObject(MenuItem.class);
-                                        item.setId(itemDoc.getId());
-                                        favoriteItems.add(item);
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                })
-                                .addOnFailureListener(e -> {
-                                    Toast.makeText(getContext(), "Ошибка загрузки товаров: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                });
-
-                    } else {
-                        adapter.notifyDataSetChanged();
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Ошибка загрузки избранного: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-    }
-
     private void loadOnlyFavoriteItems(String userId) {
         FavoritesWorkHelper favoritesHelper = new FavoritesWorkHelper();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -162,7 +106,6 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
                             })
                             .addOnFailureListener(e -> {
                                 // Обработка ошибки загрузки
-                                adapter.notifyDataSetChanged();
                             });
                 }
             } else {
@@ -185,5 +128,6 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+        loadOnlyFavoriteItems(userSessionManager.getUserId());
     }
 }
