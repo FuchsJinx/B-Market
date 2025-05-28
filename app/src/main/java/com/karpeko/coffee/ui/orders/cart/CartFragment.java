@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.UserSessionManager;
+import com.karpeko.coffee.notification.OrderNotificationHelper;
 import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
 import com.karpeko.coffee.ui.menu.lists.item.ItemEditActivity;
 import com.karpeko.coffee.ui.orders.OrderWorkHelper;
@@ -125,10 +126,7 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
                         }
 
                         // Вычисляем total
-                        double total = 0;
-                        for (CartItem item : cartItemsInDatabase) {
-                            total += item.getPrice() * item.quantity;
-                        }
+                        double total = cartItemsInDatabase.stream().mapToDouble(item -> item.getPrice() * item.quantity).sum();
 
                         // Обновляем адаптер (если нужно)
                         adapter.setCartItems(cartItemsInDatabase);
@@ -137,6 +135,9 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
                         // Создаём заказ
                         OrderWorkHelper orderHelper = new OrderWorkHelper();
                         orderHelper.createOrder(userId, total, cartItemsInDatabase, orderId -> {
+                            new OrderNotificationHelper(getContext())
+                                    .showOrderCreatedNotification(orderId, total, cartItemsInDatabase.size());
+
                             Toast.makeText(getContext(), "Заказ оформлен! Номер заказа: " + orderId, Toast.LENGTH_LONG).show();
                             // Очистка корзины после успешного заказа
                             cartWorkHelper.clearCart(userId, new CartWorkHelper.OnCartClearedListener() {

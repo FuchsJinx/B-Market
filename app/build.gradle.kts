@@ -41,7 +41,6 @@ dependencies {
 
     // Для Firebase BoM (рекомендуется):
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-//    implementation("com.google.android.gms")
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.android.gms:play-services-base:18.3.0")
@@ -49,7 +48,17 @@ dependencies {
 
     implementation("com.google.firebase:firebase-auth:22.1.1") // проверьте актуальную версию
     implementation("com.google.android.gms:play-services-auth:20.6.0") // Google Sign-In
-    implementation("com.google.firebase:firebase-database:20.2.2") // для Realtime Database
+
+    implementation("androidx.work:work-runtime:2.7.1") // WorkManager
+    implementation("com.google.firebase:firebase-firestore:24.4.1")
+
+    // Решение для ListenableFuture (выберите один вариант)
+
+    // Вариант 1: Добавьте Guava (если используете Firebase с Guava)
+    implementation("com.google.guava:guava:31.1-android")
+
+    // ИЛИ Вариант 2: Используйте специальную версию для Android
+    implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
 
     implementation(libs.appcompat)
     implementation(libs.material)

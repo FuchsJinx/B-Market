@@ -24,7 +24,8 @@
         android:id="@+id/textViewName"
         android:text="Имя пользователя"
         style="@style/Title"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textSize="30dp"/>
 
     <TextView
         android:id="@+id/textViewEmail"
@@ -50,9 +51,23 @@
         android:layout_marginTop="24dp" />
 
     <TextView
+        android:layout_height="30dp"
+        android:id="@+id/history"
+        style="@style/ClickedText"
+        android:text="История заказов" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_height="30dp"
+        android:id="@+id/favorite"
+        style="@style/ClickedText"
+        android:text="Избранное" />
+
+    <TextView
+        android:layout_height="30dp"
         android:id="@+id/forgotPassword"
         style="@style/ClickedText"
-        android:text="Восстановить пароль"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="50dp"
+        android:text="Восстановить пароль" />
+
 
 </LinearLayout>

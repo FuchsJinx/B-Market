@@ -28,10 +28,10 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class HistoryFragment extends Fragment implements OrdersAdapter.OnOrderClickListener {
+public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistoryClickListener {
 
     RecyclerView recyclerView;
-    OrdersAdapter adapter;
+    HistoryAdapter adapter;
     UserSessionManager userSessionManager;
 
     @SuppressLint("MissingInflatedId")
@@ -41,7 +41,7 @@ public class HistoryFragment extends Fragment implements OrdersAdapter.OnOrderCl
         userSessionManager = new UserSessionManager(getContext());
 
         recyclerView = view.findViewById(R.id.recyclerViewOrders);
-        adapter = new OrdersAdapter(new ArrayList<>(), this);
+        adapter = new HistoryAdapter(new ArrayList<>(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
@@ -77,7 +77,7 @@ public class HistoryFragment extends Fragment implements OrdersAdapter.OnOrderCl
     }
 
     @Override
-    public void onOrderClick(Order order) {
+    public void onHistoryClick(Order order) {
         Intent intent = new Intent(getContext(), OrderReceiptActivity.class);
         intent.putExtra("orderId", order.getOrderId());
         intent.putExtra("userId", order.getUserId());

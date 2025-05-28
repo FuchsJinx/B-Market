@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.LoginActivity;
 import com.karpeko.coffee.account.UserSessionManager;
+import com.karpeko.coffee.ui.orders.OrderActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +38,7 @@ import java.io.OutputStream;
 
 public class AccountFragment extends Fragment {
 
-    private TextView textViewName, textViewEmail, forgotPassword;
+    private TextView textViewName, textViewEmail, forgotPassword, favorite, history;
     private Button buttonLogout;
     private ImageButton editAccountButton;
 
@@ -59,6 +60,8 @@ public class AccountFragment extends Fragment {
         buttonLogout = view.findViewById(R.id.buttonLogout);
         editAccountButton = view.findViewById(R.id.editAccountButton);
         forgotPassword = view.findViewById(R.id.forgotPassword);
+        favorite = view.findViewById(R.id.favorite);
+        history = view.findViewById(R.id.history);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -83,9 +86,18 @@ public class AccountFragment extends Fragment {
             openImageChooser();
         });
 
+        favorite.setOnClickListener(v -> startSelection(R.id.navigation_favorite));
+        history.setOnClickListener(v -> startSelection(R.id.navigation_history));
+
         loadAvatarForUser();
 
         return view;
+    }
+
+    private void startSelection(int id) {
+        Intent intent = new Intent(getContext(), OrderActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 
     private void showUserInformation(FirebaseUser currentUser) {
