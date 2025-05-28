@@ -17,8 +17,7 @@
     <EditText
         android:id="@+id/passwordText"
         style="@style/EditTextStyle"
-        android:hint="Введите пароль"
-        android:inputType="textPassword"/>
+        android:hint="Введите пароль" />
 
     <Button
         android:id="@+id/loginButton"

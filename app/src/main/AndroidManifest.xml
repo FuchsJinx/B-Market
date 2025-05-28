@@ -23,7 +23,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CB"
         tools:targetApi="31">
-        <activity android:name=".ui.orders.order.OrderReceiptActivity"/>
+        <activity
+            android:name=".ui.account.AboutActivity"
+            android:exported="false" />
+        <activity android:name=".ui.orders.order.OrderReceiptActivity" />
         <activity
             android:name=".ui.orders.OrderActivity"
             android:exported="false"
@@ -54,9 +57,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Для WorkManager 2.5.0+ -->
+        </activity> <!-- Для WorkManager 2.5.0+ -->
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -65,6 +66,7 @@
                 android:name="androidx.work.WorkManagerInitializer"
                 android:value="androidx.startup" />
         </provider>
+
         <receiver android:name=".notification.NotificationReceiver" />
     </application>
 

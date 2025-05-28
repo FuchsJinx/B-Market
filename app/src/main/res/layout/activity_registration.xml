@@ -19,6 +19,7 @@
     <EditText
         android:id="@+id/emailText"
         style="@style/EditTextStyle"
+        android:inputType="textEmailAddress"
         android:hint="Введите электронную почту"/>
 
     <EditText

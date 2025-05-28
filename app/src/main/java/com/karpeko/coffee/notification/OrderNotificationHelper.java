@@ -85,11 +85,11 @@ public class OrderNotificationHelper {
 
         // Утреннее уведомление (9:00)
         setDailyNotification(alarmManager, 8, 0, MORNING_NOTIFICATION_ID,
-                "Доброе утро!", "Не забудьте проверить свежие поступления!");
+                "Доброе утро!", "Начните его с чашечки ароматного кофе!");
 
         // Вечернее уведомление (20:00)
-        setDailyNotification(alarmManager, 21, 0, EVENING_NOTIFICATION_ID,
-                "Добрый вечер!", "Посмотрите акции и специальные предложения!");
+        setDailyNotification(alarmManager, 18, 0, EVENING_NOTIFICATION_ID,
+                "Добрый вечер!", "Отдохните после тяжелого дня с чашечкой кофе и интересной книгой в нашей кофейне!");
     }
 
     private void setDailyNotification(AlarmManager alarmManager, int hour, int minute,

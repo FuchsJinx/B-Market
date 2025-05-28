@@ -24,8 +24,7 @@
         android:id="@+id/textViewName"
         android:text="Имя пользователя"
         style="@style/Title"
-        android:layout_marginTop="10dp"
-        android:textSize="30dp"/>
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textViewEmail"
