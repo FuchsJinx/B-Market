@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.karpeko.coffee.account.BaseAuthActivity;
 import com.karpeko.coffee.account.UserSessionManager;
 import com.karpeko.coffee.databinding.ActivityMainBinding;
 import com.karpeko.coffee.ui.account.AboutActivity;

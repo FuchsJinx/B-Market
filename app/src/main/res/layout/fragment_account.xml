@@ -18,7 +18,9 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="centerCrop"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_corners"
+        android:clipToOutline="true"/>
 
     <TextView
         android:id="@+id/textViewName"

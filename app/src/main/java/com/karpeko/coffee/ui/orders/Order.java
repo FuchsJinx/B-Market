@@ -14,7 +14,7 @@ public class Order {
     private String deliveryAddress;     // адрес доставки (если delivery)
     private Double deliveryLatitude;    // широта (если delivery)
     private Double deliveryLongitude;   // долгота (если delivery)
-    private String pickupCoffeeShop;    // выбранная кофейня (если pickup)
+    private String pickupCoffeeShop = "Кофе и книги";    // выбранная кофейня (если pickup)
 
     public Order() {
         // Пустой конструктор для Firestore

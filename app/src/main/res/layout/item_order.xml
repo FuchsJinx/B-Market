@@ -19,7 +19,11 @@
             android:layout_height="wrap_content"
             android:text="Заказ №123456"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/soft_coffee_brown_dark"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/tvStatus"
@@ -27,7 +31,9 @@
             android:layout_height="wrap_content"
             android:text="Статус: Готовится"
             android:layout_marginTop="4dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
         <TextView
             android:id="@+id/tvDate"
@@ -35,7 +41,9 @@
             android:layout_height="wrap_content"
             android:text="Дата: 22.05.2025 20:30"
             android:layout_marginTop="4dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
 
         <TextView
             android:id="@+id/tvTotal"
@@ -44,7 +52,11 @@
             android:text="Итого: 1234.56 ₽"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/soft_coffee_brown_dark"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
 

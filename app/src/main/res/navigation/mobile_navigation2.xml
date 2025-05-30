@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.karpeko.coffee.ui.orders.favorite.FavoriteFragment"
-        android:label="Понравившееся"
+        android:label="Избранное"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment

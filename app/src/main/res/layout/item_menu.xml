@@ -17,7 +17,9 @@
             android:layout_height="64dp"
             android:scaleType="centerCrop"
             android:contentDescription="Изображение товара"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/ic_launcher_background"
+            android:background="@drawable/rounded_corners"
+            android:clipToOutline="true"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -31,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:text="Название товара"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/soft_coffee_brown_dark"/>
 
             <TextView
                 android:id="@+id/itemPrice"

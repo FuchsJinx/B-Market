@@ -61,7 +61,7 @@ public class OrderNotificationHelper {
         String amountText = String.format(Locale.getDefault(), "%.2f руб.", totalAmount);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.main_icon)
                 .setContentTitle("Заказ оформлен")
                 .setContentText("Сумма: " + amountText)
                 .setStyle(new NotificationCompat.BigTextStyle()

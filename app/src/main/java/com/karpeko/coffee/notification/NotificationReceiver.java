@@ -16,7 +16,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         int notificationId = intent.getIntExtra("notification_id", 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, OrderNotificationHelper.CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.main_icon)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

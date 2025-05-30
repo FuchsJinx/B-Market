@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_orders"
-        android:name="com.karpeko.coffee.ui.orders.OrdersFragment"
+        android:name="com.karpeko.coffee.ui.orders.order.OrderFragment"
         android:label="Заказы"
         tools:layout="@layout/fragment_orders" />
 

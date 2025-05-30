@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<resources>-->
+<!--    <style name="Title" parent="Theme.AppCompat.DayNight.DarkActionBar">-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:layout_width">300dp</item>-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:gravity">center</item>-->
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:textSize">40sp</item>-->
+<!--        <item name="android:layout_marginTop">100dp</item>-->
+<!--    </style>-->
+
+<!--    <style name="EditTextStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">-->
+<!--        <item name="android:layout_height">50dp</item>-->
+<!--        <item name="android:layout_width">300dp</item>-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:layout_marginTop">15dp</item>-->
+<!--        <item name="android:textSize">18sp</item>-->
+<!--    </style>-->
+
+<!--    <style name="ButtonStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:layout_width">300dp</item>-->
+<!--        <item name="android:layout_marginTop">10dp</item>-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:textSize">16sp</item>-->
+<!--    </style>-->
+
+<!--    <style name="ClickedText" parent="Theme.AppCompat.DayNight.DarkActionBar">-->
+<!--        <item name="android:layout_height">48dp</item>-->
+<!--        <item name="android:layout_width">300dp</item>-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:gravity">center</item>-->
+<!--        <item name="android:clickable">true</item>-->
+<!--        <item name="android:focusable">true</item>-->
+<!--        <item name="android:textSize">16sp</item>-->
+<!--        <item name="android:layout_marginTop">10dp</item>-->
+<!--    </style>-->
+<!--</resources>-->
+
 <resources>
     <style name="Title" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:layout_height">wrap_content</item>
@@ -8,6 +47,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">40sp</item>
         <item name="android:layout_marginTop">100dp</item>
+        <item name="android:textColor">@color/text_primary</item> <!-- тёмно-коричневый -->
     </style>
 
     <style name="EditTextStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -16,6 +56,8 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_primary</item> <!-- тёмно-коричневый -->
+        <item name="android:backgroundTint">@color/soft_coffee_brown_dark</item> <!-- цвет рамки -->
     </style>
 
     <style name="ButtonStyle" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -24,6 +66,8 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_on_primary</item> <!-- белый текст -->
+        <item name="android:backgroundTint">@color/soft_coffee_brown</item> <!-- мягкий коричневый фон -->
     </style>
 
     <style name="ClickedText" parent="Theme.AppCompat.DayNight.DarkActionBar">
@@ -35,5 +79,21 @@
         <item name="android:focusable">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/soft_coffee_brown_dark</item> <!-- тёмно-коричневый -->
     </style>
+
+    <style name="Text" parent="Title">
+        <item name="android:textColor">@color/soft_coffee_brown_dark</item>
+    </style>
+
+
+
+    <style name="SpinnerDropDownAnimation" parent="Widget.AppCompat.Spinner.DropDown">
+        <item name="android:popupAnimationStyle">@style/PopupAnimation</item>
+    </style>
+
+    <style name="PopupAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+    </style>
+
 </resources>

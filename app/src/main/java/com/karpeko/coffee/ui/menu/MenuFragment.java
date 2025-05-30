@@ -23,12 +23,16 @@ import com.karpeko.coffee.ui.menu.lists.base.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.airbnb.lottie.LottieAnimationView;
+
+// ...
+
 public class MenuFragment extends Fragment {
 
     private RecyclerView categories;
     private BaseAdapter adapter;
     private List<Base> categoryList = new ArrayList<>();
-    private ProgressBar progressBar;
+    private LottieAnimationView lottieLoading; // заменили ProgressBar на LottieAnimationView
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,7 +41,8 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         categories = view.findViewById(R.id.categories);
-        progressBar = view.findViewById(R.id.progressBar); // Добавляем ProgressBar в разметку fragment_menu.xml
+        lottieLoading = view.findViewById(R.id.lottieLoading);
+        lottieLoading.setAnimation(R.raw.progress_animation);
 
         adapter = new BaseAdapter(getContext(), categoryList);
         categories.setAdapter(adapter);
@@ -78,8 +83,15 @@ public class MenuFragment extends Fragment {
     }
 
     private void showLoading(boolean isLoading) {
-        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        categories.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        if (isLoading) {
+            lottieLoading.setVisibility(View.VISIBLE);
+            lottieLoading.playAnimation();
+            categories.setVisibility(View.GONE);
+        } else {
+            lottieLoading.cancelAnimation();
+            lottieLoading.setVisibility(View.GONE);
+            categories.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showError(String message) {

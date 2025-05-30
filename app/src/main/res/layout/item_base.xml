@@ -11,7 +11,9 @@
         android:layout_height="70dp"
         android:scaleType="centerCrop"
         android:contentDescription="Изображение категории"
-        android:src="@drawable/ic_launcher_background" />
+        android:src="@drawable/ic_launcher_background"
+        android:background="@drawable/rounded_corners"
+        android:clipToOutline="true"/>
 
     <TextView
         android:id="@+id/text"
@@ -20,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Категория"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/soft_coffee_brown_dark"/>
 
 </LinearLayout>

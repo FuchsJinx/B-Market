@@ -17,41 +17,51 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/main_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/main_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.CB"
         tools:targetApi="31">
         <activity
             android:name=".ui.account.AboutActivity"
-            android:exported="false" />
-        <activity android:name=".ui.orders.order.OrderReceiptActivity" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.orders.order.OrderReceiptActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.orders.OrderActivity"
             android:exported="false"
-            android:label="@string/title_activity_order_actvity" />
+            android:label="@string/title_activity_order_actvity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.menu.lists.item.ItemEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".account.RegistrationActivity"
-            android:exported="false" />
-        <activity android:name=".account.LoginActivity" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".account.LoginActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.menu.lists.category.CategoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.menu.lists.item.ItemDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".account.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.CB.NoActionBar">
+            android:theme="@style/Theme.CB.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,6 +78,8 @@
         </provider>
 
         <receiver android:name=".notification.NotificationReceiver" />
+
+        <service android:name=".notification.BackgroundSoundService" />
     </application>
 
 </manifest>

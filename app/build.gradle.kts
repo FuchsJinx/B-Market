@@ -60,6 +60,8 @@ dependencies {
     // ИЛИ Вариант 2: Используйте специальную версию для Android
     implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
 
+    implementation("com.airbnb.android:lottie:6.0.0")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)

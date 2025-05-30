@@ -12,7 +12,9 @@
             android:id="@+id/itemImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_corners"
+            android:clipToOutline="true"/>
 
         <TextView
             android:id="@+id/itemName"
@@ -20,7 +22,8 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:textColor="@color/soft_coffee_brown_dark"/>
 
         <TextView
             android:id="@+id/itemPrice"
@@ -36,7 +39,8 @@
             android:layout_height="wrap_content"
             android:text="Описание"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/soft_coffee_brown_dark"/>
 
         <TextView
             android:id="@+id/itemComposition"
@@ -63,7 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Сохранить изменения"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="24dp"
+            android:background="@color/soft_coffee_brown"/>
 
     </LinearLayout>
 </ScrollView>

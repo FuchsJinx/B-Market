@@ -16,9 +16,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.karpeko.coffee.R;
 
-public class AboutActivity extends AppCompatActivity {
+import com.airbnb.lottie.LottieAnimationView;
 
-    boolean isClicked = false;
+public class AboutActivity extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,10 +28,15 @@ public class AboutActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.click);
         TextView textView1 = findViewById(R.id.pol);
+        LottieAnimationView lottieAnimationView = findViewById(R.id.lottieAnimationView);
+        lottieAnimationView.setAnimation(R.raw.infinity_animation);
+
+        // Запускаем анимацию (если не включено в XML)
+        lottieAnimationView.playAnimation();
 
         textView.setOnClickListener(v -> {
-                textView1.setVisibility(VISIBLE);
-                textView.setVisibility(GONE);
+            textView1.setVisibility(VISIBLE);
+            textView.setVisibility(GONE);
         });
 
         textView1.setOnClickListener(v -> {

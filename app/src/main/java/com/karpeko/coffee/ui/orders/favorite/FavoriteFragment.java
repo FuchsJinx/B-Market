@@ -54,7 +54,7 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
         adapter = new FavoriteAdapter(favoriteItems, this);
         recyclerView.setAdapter(adapter);
 
-//        loadOnlyFavoriteItems(userSessionManager.getUserId());
+        loadOnlyFavoriteItems(userSessionManager.getUserId());
 
         return view;
     }
@@ -120,13 +120,13 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
         Intent intent = new Intent(getContext(), ItemDetailActivity.class);
         intent.putExtra("item", item.getId());
         startActivity(intent);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
-        loadOnlyFavoriteItems(userSessionManager.getUserId());
+//        loadOnlyFavoriteItems(userSessionManager.getUserId());
     }
 }

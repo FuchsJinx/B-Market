@@ -116,6 +116,16 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionVi
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     selectedOptions.put(groupName, values.get(position));
+                    view.animate()
+                            .scaleX(1.1f)
+                            .scaleY(1.1f)
+                            .setDuration(150)
+                            .withEndAction(() -> view.animate()
+                                    .scaleX(1f)
+                                    .scaleY(1f)
+                                    .setDuration(150)
+                                    .start())
+                            .start();
                 }
 
                 @Override
