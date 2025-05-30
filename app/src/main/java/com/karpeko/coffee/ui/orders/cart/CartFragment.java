@@ -2,6 +2,7 @@ package com.karpeko.coffee.ui.orders.cart;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -139,6 +140,7 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
                                     .showOrderCreatedNotification(orderId, total, cartItemsInDatabase.size());
 
                             Toast.makeText(getContext(), "Заказ оформлен! Номер заказа: " + orderId, Toast.LENGTH_LONG).show();
+                            playSound(R.raw.right_answer);
                             // Очистка корзины после успешного заказа
                             cartWorkHelper.clearCart(userId, new CartWorkHelper.OnCartClearedListener() {
                                 @SuppressLint("NotifyDataSetChanged")
@@ -157,6 +159,7 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
                         });
 
                     } else {
+                        playSound(R.raw.wrong_answer);
                         Log.w("Firestore", "Ошибка получения данных.", task.getException());
                         Toast.makeText(getContext(), "Ошибка загрузки корзины", Toast.LENGTH_SHORT).show();
                     }
@@ -176,4 +179,14 @@ public class CartFragment extends Fragment implements CartAdapter.OnItemClickLis
         startActivity(intent);
     }
 
+    private void playSound(int resId) {
+        MediaPlayer click = MediaPlayer.create(getContext(), resId);
+        if (click.isPlaying()) {
+            click.pause();
+            click.seekTo(0);
+            click.setLooping(false);
+        }
+        click.setVolume(0.5f, 0.5f);
+        click.start();
+    }
 }

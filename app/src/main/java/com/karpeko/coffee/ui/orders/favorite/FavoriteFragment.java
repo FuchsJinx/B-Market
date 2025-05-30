@@ -120,6 +120,7 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
         Intent intent = new Intent(getContext(), ItemDetailActivity.class);
         intent.putExtra("item", item.getId());
         startActivity(intent);
+        requireActivity().finish();
 //        adapter.notifyDataSetChanged();
     }
 

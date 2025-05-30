@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        startService(new Intent(this, BackgroundSoundService.class));
+//        startService(new Intent(this, BackgroundSoundService.class));
 
         OrderNotificationHelper notificationHelper = new OrderNotificationHelper(this);
         notificationHelper.scheduleDailyNotifications();
