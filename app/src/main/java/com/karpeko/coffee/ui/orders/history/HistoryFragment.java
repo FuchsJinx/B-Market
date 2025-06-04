@@ -20,7 +20,6 @@ import com.google.firebase.firestore.Query;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.UserSessionManager;
 import com.karpeko.coffee.ui.orders.Order;
-import com.karpeko.coffee.ui.orders.OrdersAdapter;
 import com.karpeko.coffee.ui.orders.order.OrderReceiptActivity;
 
 import java.util.ArrayList;

@@ -11,34 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.account.UserSessionManager;
-import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.karpeko.coffee.R;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ItemEditActivity extends AppCompatActivity {
 

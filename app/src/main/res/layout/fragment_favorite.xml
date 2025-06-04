@@ -2,16 +2,17 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="600dp"
-    android:layout_marginTop="50dp"
-    android:id="@+id/fragment_container">
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_container"
+    android:background="@drawable/background">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFavorites"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="610dp"
         android:padding="8dp"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        android:layout_marginTop="50dp"/>
 
     <!-- Можно добавить TextView для пустого состояния -->
     <TextView

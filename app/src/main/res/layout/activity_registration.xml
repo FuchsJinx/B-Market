@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".account.RegistrationActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/cat">
 
     <TextView
         style="@style/Title"
@@ -40,11 +41,13 @@
 
     <TextView
         android:id="@+id/toLogin"
+        android:layout_height="30dp"
         android:text="Уже зарегистрированны? Войти"
         style="@style/ClickedText"/>
 
     <TextView
         android:id="@+id/loginOut"
+        android:layout_height="30dp"
         android:text="Продолжить без аккаунта"
         style="@style/ClickedText"/>
 </LinearLayout>

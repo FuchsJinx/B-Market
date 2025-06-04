@@ -39,7 +39,7 @@ public class OrderActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         int id = getIntent().getIntExtra("id", R.id.navigation_favorite);
-        navController.navigate(id);
+        navView.setSelectedItemId(id);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.karpeko.coffee.account;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,14 +10,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
 import com.karpeko.coffee.R;
+import com.karpeko.coffee.ui.account.ForgotPasswordDialog;
 
 public class LoginActivity extends BaseAuthActivity {
 
     EditText emailText, passwordText;
     Button loginButton, loginWithGoogle;
-    TextView toRegistration, loginOut;
+    TextView toRegistration, loginOut, forgotPassword;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,7 @@ public class LoginActivity extends BaseAuthActivity {
         loginWithGoogle = findViewById(R.id.loginWithGoogle);
         toRegistration = findViewById(R.id.toRegistration);
         loginOut = findViewById(R.id.loginOut);
+        forgotPassword = findViewById(R.id.forgotPassword);
 
         loginButton.setOnClickListener(v -> loginUser());
         loginWithGoogle.setOnClickListener(v -> signInWithGoogle());
@@ -36,6 +41,8 @@ public class LoginActivity extends BaseAuthActivity {
             finish();
         });
         loginOut.setOnClickListener(v -> startMainActivity());
+
+        forgotPassword.setOnClickListener(v -> openForgotPasswordDialog());
     }
 
     private void loginUser() {
@@ -63,5 +70,10 @@ public class LoginActivity extends BaseAuthActivity {
                         Toast.makeText(LoginActivity.this, "Ошибка входа: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void openForgotPasswordDialog() {
+        ForgotPasswordDialog dialog = new ForgotPasswordDialog(this);
+        dialog.show();
     }
 }

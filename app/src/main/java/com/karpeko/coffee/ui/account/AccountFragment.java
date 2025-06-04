@@ -38,7 +38,7 @@ import java.io.OutputStream;
 
 public class AccountFragment extends Fragment {
 
-    private TextView textViewName, textViewEmail, forgotPassword, favorite, history;
+    private TextView textViewName, textViewEmail, favorite, history;
     private Button buttonLogout;
     private ImageButton editAccountButton;
 
@@ -59,7 +59,6 @@ public class AccountFragment extends Fragment {
         textViewEmail = view.findViewById(R.id.textViewEmail);
         buttonLogout = view.findViewById(R.id.buttonLogout);
         editAccountButton = view.findViewById(R.id.editAccountButton);
-        forgotPassword = view.findViewById(R.id.forgotPassword);
         favorite = view.findViewById(R.id.favorite);
         history = view.findViewById(R.id.history);
 
@@ -77,7 +76,6 @@ public class AccountFragment extends Fragment {
         showUserInformation(currentUser);
 
         editAccountButton.setOnClickListener(v -> openEditProfileDialog());
-        forgotPassword.setOnClickListener(v -> openForgotPasswordDialog());
 
         buttonLogout.setOnClickListener(v -> logout());
 

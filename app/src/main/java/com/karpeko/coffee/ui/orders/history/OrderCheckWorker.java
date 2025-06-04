@@ -142,7 +142,7 @@ public class OrderCheckWorker extends Worker {
 
         // 2. Проверяем все заказы с нужным статусом
         db.collection("orders")
-                .whereEqualTo("status", "Cosqan")
+                .whereEqualTo("status", "Создан")
                 .get()
                 .addOnSuccessListener(snapshot -> {
                     Log.d("ORDER_DIAG", "=== Все заказы 'Создан' ===");

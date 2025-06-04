@@ -3,50 +3,57 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="650dp">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
-    <!-- Заголовок -->
-    <TextView
-        android:id="@+id/textCartTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ваша корзина"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="12dp" />
-
-    <!-- RecyclerView для списка товаров -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp" />
+        android:layout_height="630dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textTotal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Итого: 0 ₽"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="end"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/soft_coffee_brown_dark"/>
+        <!-- Заголовок -->
+        <TextView
+            android:id="@+id/textCartTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ваша корзина"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="12dp" />
+
+        <!-- RecyclerView для списка товаров -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Итого: 0 ₽"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="end"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/soft_coffee_brown_dark"/>
 
 
-    <!-- Кнопка оформить заказ -->
-    <Button
-        android:id="@+id/buttonOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Оформить заказ"
-        android:layout_marginTop="12dp"
-        android:textColor="@android:color/white"
-        android:padding="12dp"
-        android:background="@color/soft_coffee_brown"/>
+        <!-- Кнопка оформить заказ -->
+        <Button
+            android:id="@+id/buttonOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Оформить заказ"
+            android:layout_marginTop="12dp"
+            android:textColor="@android:color/white"
+            android:padding="12dp"
+            android:background="@color/soft_coffee_brown"/>
+    </LinearLayout>
 
 </LinearLayout>

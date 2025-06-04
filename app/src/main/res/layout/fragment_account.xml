@@ -4,7 +4,8 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_container">
+    android:id="@+id/fragment_container"
+    android:background="@drawable/girl">
 
     <ImageView
         android:id="@+id/icon"
@@ -26,7 +27,8 @@
         android:id="@+id/textViewName"
         android:text="Имя пользователя"
         style="@style/Title"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textSize="30dp"/>
 
     <TextView
         android:id="@+id/textViewEmail"
@@ -49,7 +51,7 @@
         android:id="@+id/buttonLogout"
         style="@style/ButtonStyle"
         android:text="Выйти из аккаунта"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="14dp" />
 
     <TextView
         android:layout_height="30dp"
@@ -62,13 +64,5 @@
         android:id="@+id/favorite"
         style="@style/ClickedText"
         android:text="Избранное" />
-
-    <TextView
-        android:layout_height="30dp"
-        android:id="@+id/forgotPassword"
-        style="@style/ClickedText"
-        android:layout_marginTop="50dp"
-        android:text="Восстановить пароль" />
-
 
 </LinearLayout>

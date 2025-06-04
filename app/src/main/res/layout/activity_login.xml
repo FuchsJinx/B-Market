@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/cat">
 
     <TextView
         android:text="Вход"
-        style="@style/Title"/>
+        style="@style/Title"
+        android:layout_marginTop="70dp"/>
 
     <EditText
         android:id="@+id/emailText"
@@ -32,11 +34,19 @@
 
     <TextView
         android:id="@+id/toRegistration"
+        android:layout_height="30dp"
         android:text="Еще нет аккаунта? Зарегистрироваться"
         style="@style/ClickedText"/>
 
     <TextView
         android:id="@+id/loginOut"
+        android:layout_height="30dp"
         android:text="Продолжить без аккаунта"
         style="@style/ClickedText"/>
+    <TextView
+        android:layout_height="30dp"
+        android:id="@+id/forgotPassword"
+        style="@style/ClickedText"
+        android:layout_marginTop="10dp"
+        android:text="Восстановить пароль" />
 </LinearLayout>
