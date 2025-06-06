@@ -2,18 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
+    <meta-data
+        android:name="com.yandex.maps.apikey"
+        android:value="fa38298f-9b77-4fb5-9a2f-73fcd4a69960"/>
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
+        android:name=".cafes.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,6 +30,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CB"
         tools:targetApi="31">
+
+        <activity
+            android:name=".cafes.MapActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.account.AboutActivity"
             android:exported="false"

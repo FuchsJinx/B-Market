@@ -50,6 +50,8 @@ public class ItemDetailActivity extends AppCompatActivity {
     private TextView compositionView;
     private TextView allergensView;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +75,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         addToCartButton.setOnClickListener(v -> addToCart());
         Log.d("ID", itemId);
 
-        setupFavoriteCheckbox();
-
         loadItem(itemId);
+
+        setupFavoriteCheckbox();
     }
 
     private void setupFavoriteCheckbox() {
@@ -140,7 +142,6 @@ public class ItemDetailActivity extends AppCompatActivity {
         adapter = new OptionsAdapter(item.getOptions());
         optionsRecycler.setLayoutManager(new LinearLayoutManager(this));
         optionsRecycler.setAdapter(adapter);
-//        adapter.setOptions(item.getOptions());
     }
 
     private void addToCart() {
@@ -170,7 +171,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         cartWorkHelper.addOrUpdateCartItem(userId, cartItem, item);
 
         Toast.makeText(this, "Товар добавлен в корзину", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, OrderActivity.class));
+        Intent intent = new Intent(this, OrderActivity.class);
+        intent.putExtra("id", R.id.navigation_cart);
+        startActivity(intent);
         finish();
     }
 

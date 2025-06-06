@@ -13,13 +13,6 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.firestore.FieldPath;
 import com.karpeko.coffee.R;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,11 +23,7 @@ import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
 import com.karpeko.coffee.ui.menu.lists.item.MenuItem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItemClickListener {
 
@@ -121,13 +110,11 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.OnItem
         intent.putExtra("item", item.getId());
         startActivity(intent);
         requireActivity().finish();
-//        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
-//        loadOnlyFavoriteItems(userSessionManager.getUserId());
     }
 }

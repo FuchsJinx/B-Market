@@ -1,6 +1,5 @@
 package com.karpeko.coffee.ui.orders;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,8 +13,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.karpeko.coffee.R;
 import com.karpeko.coffee.databinding.ActivityOrderBinding;
-import com.karpeko.coffee.ui.menu.lists.item.ItemDetailActivity;
-
 public class OrderActivity extends AppCompatActivity {
 
     private ActivityOrderBinding binding;

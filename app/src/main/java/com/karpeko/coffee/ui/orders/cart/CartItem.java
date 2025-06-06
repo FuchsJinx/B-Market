@@ -38,6 +38,14 @@ public class CartItem {
     public void setCartItemId(String cartItemId) {
         this.cartItemId = cartItemId;
     }
+
+    public String getCartItemId() {
+        return cartItemId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }
 
 

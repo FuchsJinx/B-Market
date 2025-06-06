@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven(uri("https://maven.pkg.jetbrains.space/public/p/ymaps/android"))
     }
 }
 dependencyResolutionManagement {

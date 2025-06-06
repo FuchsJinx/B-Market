@@ -53,7 +53,8 @@
             android:layout_marginTop="12dp"
             android:textColor="@android:color/white"
             android:padding="12dp"
-            android:background="@color/soft_coffee_brown"/>
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="@color/soft_coffee_brown"/>
     </LinearLayout>
 
 </LinearLayout>

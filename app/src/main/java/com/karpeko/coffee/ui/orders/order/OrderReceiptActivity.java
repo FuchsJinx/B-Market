@@ -84,7 +84,7 @@ public class OrderReceiptActivity extends AppCompatActivity {
                                 textOrderAddress.setText("Адрес: " + order.getDeliveryAddress());
                             } else {
                                 textOrderType.setText("Тип: Самовывоз");
-                                textOrderAddress.setText("Кофейня: " + order.getPickupCoffeeShop());
+                                textOrderAddress.setText("Кофейня: " + order.getPickupCafeId());
                             }
 
                             loadOrderItemsByOrderId(orderId);

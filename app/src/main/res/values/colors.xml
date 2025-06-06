@@ -13,4 +13,7 @@
     <color name="soft_coffee_brown_dark">#8B6B4F</color> <!-- темный коричневый -->
     <color name="text_primary">#3E2F1C</color> <!-- основной тёмно-коричневый текст -->
     <color name="text_on_primary">#FFFFFF</color> <!-- белый текст на коричневом фоне -->
+
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
 </resources>

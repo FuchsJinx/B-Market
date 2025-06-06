@@ -32,12 +32,16 @@
     <Button
         android:id="@+id/registrationButton"
         android:text="Зарегистрироваться"
-        style="@style/ButtonStyle"/>
+        style="@style/ButtonStyle"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/soft_coffee_brown"/>
 
     <Button
         android:id="@+id/registrationWithGoogle"
         android:text="Войти через Google"
-        style="@style/ButtonStyle"/>
+        style="@style/ButtonStyle"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/soft_coffee_brown"/>
 
     <TextView
         android:id="@+id/toLogin"

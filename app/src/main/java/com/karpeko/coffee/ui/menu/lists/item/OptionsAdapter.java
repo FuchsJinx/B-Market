@@ -3,8 +3,6 @@ package com.karpeko.coffee.ui.menu.lists.item;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,23 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.karpeko.coffee.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionViewHolder> {
 

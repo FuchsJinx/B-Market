@@ -158,5 +158,4 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     .addOnFailureListener(e -> Log.e("CartAdapter", "Failed to delete item", e));
         }
     }
-
 }

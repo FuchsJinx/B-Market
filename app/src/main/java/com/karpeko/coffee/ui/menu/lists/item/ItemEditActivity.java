@@ -39,6 +39,7 @@ public class ItemEditActivity extends AppCompatActivity {
     // Переданный выбранный элемент добавки (опции)
     private Map<String, String> selectedOptionsFromIntent;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,7 @@ public class ItemEditActivity extends AppCompatActivity {
 
         optionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        itemId = getIntent().getStringExtra("item");
+        itemId = getIntent().getStringExtra("itemId");
         cartItemId = getIntent().getStringExtra("cartItemId");
         selectedOptionsFromIntent = (Map<String, String>) getIntent().getSerializableExtra("selectedOptions");
 
@@ -169,6 +170,4 @@ public class ItemEditActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Toast.makeText(this, "Ошибка при обновлении элемента: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
-
-
 }

@@ -18,8 +18,6 @@ import java.util.List;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseViewHolder> {
 
     private Context context;

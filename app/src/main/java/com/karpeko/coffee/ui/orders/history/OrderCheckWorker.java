@@ -15,13 +15,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class OrderCheckWorker extends Worker {
-    private static final String TAG = "OrderCheckWorker";
-    int cancelledCount = 0;
 
     public OrderCheckWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);

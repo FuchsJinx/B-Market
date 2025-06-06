@@ -51,7 +51,9 @@
         android:id="@+id/buttonLogout"
         style="@style/ButtonStyle"
         android:text="Выйти из аккаунта"
-        android:layout_marginTop="14dp" />
+        android:layout_marginTop="14dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/soft_coffee_brown"/>
 
     <TextView
         android:layout_height="30dp"

@@ -10,11 +10,12 @@ public class Order {
     private Timestamp createdAt;
     private Timestamp completedAt;
 
-    private String deliveryType;        // "delivery" или "pickup"
-    private String deliveryAddress;     // адрес доставки (если delivery)
-    private Double deliveryLatitude;    // широта (если delivery)
-    private Double deliveryLongitude;   // долгота (если delivery)
-    private String pickupCoffeeShop = "Кофе и книги";    // выбранная кофейня (если pickup)
+    private String deliveryType; // "delivery" или "pickup"
+    private String deliveryAddress;
+    private String pickupCafeId;
+
+    private double deliveryLat;
+    private double deliveryLng;
 
     public Order() {
         // Пустой конструктор для Firestore
@@ -86,28 +87,18 @@ public class Order {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public Double getDeliveryLatitude() {
-        return deliveryLatitude;
+    public void setPickupCafeId(String pickupCafeId) {
+        this.pickupCafeId = pickupCafeId;
     }
 
-    public void setDeliveryLatitude(Double deliveryLatitude) {
-        this.deliveryLatitude = deliveryLatitude;
+    public String getPickupCafeId() {
+        return pickupCafeId;
     }
 
-    public Double getDeliveryLongitude() {
-        return deliveryLongitude;
-    }
+    public double getDeliveryLat() { return deliveryLat; }
+    public void setDeliveryLat(double deliveryLat) { this.deliveryLat = deliveryLat; }
 
-    public void setDeliveryLongitude(Double deliveryLongitude) {
-        this.deliveryLongitude = deliveryLongitude;
-    }
-
-    public String getPickupCoffeeShop() {
-        return pickupCoffeeShop;
-    }
-
-    public void setPickupCoffeeShop(String pickupCoffeeShop) {
-        this.pickupCoffeeShop = pickupCoffeeShop;
-    }
+    public double getDeliveryLng() { return deliveryLng; }
+    public void setDeliveryLng(double deliveryLng) { this.deliveryLng = deliveryLng; }
 }
 

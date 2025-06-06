@@ -62,6 +62,11 @@ dependencies {
 
     implementation("com.airbnb.android:lottie:6.0.0")
 
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("com.yandex.android:maps.mobile:4.3.1-full")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -77,6 +82,7 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.activity)
     implementation(libs.annotation)
+    implementation(libs.transportation.consumer)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

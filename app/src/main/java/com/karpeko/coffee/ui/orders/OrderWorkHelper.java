@@ -15,34 +15,60 @@ import java.util.UUID;
 public class OrderWorkHelper {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    // Метод для создания нового заказа
-    public void createOrder(String userId, double total, List<CartItem> cartItems, OnSuccessListener<String> listener) {
+    // Обновлённый метод создания заказа
+    public void createOrder(String userId,
+                            double total,
+                            List<CartItem> cartItems,
+                            String deliveryType,
+                            String deliveryAddress,
+                            double deliveryLat,    // новый параметр
+                            double deliveryLng,    // новый параметр
+                            String pickupCafeId,
+                            OnSuccessListener<String> listener) {
+
         String orderId = UUID.randomUUID().toString();
 
-        // Создаём объект Order и заполняем его поля
         Order order = new Order();
         order.setOrderId(orderId);
         order.setUserId(userId);
-        order.setStatus("Создан"); // или другой статус
+        order.setStatus("Создан");
         order.setTotal(total);
         order.setCreatedAt(Timestamp.now());
         order.setCompletedAt(null);
+        order.setDeliveryType(deliveryType);
 
-        // Преобразуем объект Order в Map для сохранения в Firestore
+        // Добавляем координаты в объект Order
+        if("delivery".equals(deliveryType)) {
+            order.setDeliveryAddress(deliveryAddress);
+            order.setDeliveryLat(deliveryLat);
+            order.setDeliveryLng(deliveryLng);
+        } else {
+            order.setPickupCafeId(pickupCafeId);
+        }
+
         Map<String, Object> orderData = new HashMap<>();
-        orderData.put("orderId", order.getOrderId());
-        orderData.put("userId", order.getUserId());
-        orderData.put("status", order.getStatus());
-        orderData.put("total", order.getTotal());
-        orderData.put("createdAt", order.getCreatedAt());
-        orderData.put("completedAt", order.getCompletedAt());
+        orderData.put("orderId", orderId);
+        orderData.put("userId", userId);
+        orderData.put("status", "Создан");
+        orderData.put("total", total);
+        orderData.put("createdAt", Timestamp.now());
+        orderData.put("deliveryType", deliveryType);
 
-        // Сохраняем заказ в Firestore
+        // Структурируем данные по типу доставки
+        if("delivery".equals(deliveryType)) {
+            orderData.put("deliveryAddress", deliveryAddress);
+            orderData.put("deliveryGeo", new HashMap<String, Object>() {{
+                put("lat", deliveryLat);
+                put("lng", deliveryLng);
+            }});
+        } else {
+            orderData.put("pickupCafeId", pickupCafeId);
+        }
+
         db.collection("orders")
                 .document(orderId)
                 .set(orderData)
                 .addOnSuccessListener(aVoid -> {
-                    // После успешного создания заказа добавляем позиции заказа
                     addOrderItems(orderId, cartItems);
                     if (listener != null) listener.onSuccess(orderId);
                 })
