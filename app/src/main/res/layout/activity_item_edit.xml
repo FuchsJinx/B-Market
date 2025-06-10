@@ -62,14 +62,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_weight="1"/>
-
-<!--        <Button-->
-<!--            android:id="@+id/buttonSaveChanges"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Сохранить изменения"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:background="@drawable/rounded_corners"-->
-<!--            android:backgroundTint="@color/soft_coffee_brown"/>-->
     </LinearLayout>
 </ScrollView>

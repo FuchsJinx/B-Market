@@ -1,8 +1,0 @@
-<objectAnimator android:propertyName="rotation"
-    android:duration="400"
-    android:valueFrom="360"
-    android:valueTo="0"
-    android:valueType="floatType"
-    android:interpolator="@android:interpolator/accelerate_decelerate"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
-

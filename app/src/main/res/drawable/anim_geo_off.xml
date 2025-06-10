@@ -1,6 +1,0 @@
-<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/ic_geo_off">
-    <target
-        android:name="marker"
-        android:animation="@animator/geo_off_animator"/>
-</animated-vector>

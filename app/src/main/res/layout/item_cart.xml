@@ -23,16 +23,6 @@
             android:textStyle="bold"
             android:textColor="@color/soft_coffee_brown_dark"/>
 
-        <!-- Опции / кастомизации -->
-<!--        <TextView-->
-<!--            android:id="@+id/textOptions"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Опции: без сахара, со льдом"-->
-<!--            android:layout_marginTop="6dp"-->
-<!--            android:textSize="14sp"-->
-<!--            android:textColor="#555555" />-->
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
