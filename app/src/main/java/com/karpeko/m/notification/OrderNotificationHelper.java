@@ -83,13 +83,10 @@ public class OrderNotificationHelper {
     public void scheduleDailyNotifications() {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        // Утреннее уведомление (9:00)
-        setDailyNotification(alarmManager, 8, 0, MORNING_NOTIFICATION_ID,
-                "Доброе утро!", "Начните его с чашечки ароматного кофе!");
 
         // Вечернее уведомление (20:00)
-        setDailyNotification(alarmManager, 18, 0, EVENING_NOTIFICATION_ID,
-                "Добрый вечер!", "Отдохните после тяжелого дня с чашечкой кофе и интересной книгой в нашей кофейне!");
+        setDailyNotification(alarmManager, 20, 0, EVENING_NOTIFICATION_ID,
+                "Добрый вечер!", "Завершите этот вечер прекрасной книгой!");
     }
 
     private void setDailyNotification(AlarmManager alarmManager, int hour, int minute,
