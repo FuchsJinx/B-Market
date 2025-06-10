@@ -54,7 +54,7 @@
             android:textColor="@android:color/white"
             android:padding="12dp"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/soft_coffee_brown"/>
+            android:backgroundTint="@color/text_primary"/>
     </LinearLayout>
 
 </LinearLayout>

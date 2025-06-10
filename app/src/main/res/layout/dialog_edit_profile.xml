@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="Сохранить"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/soft_coffee_brown"/>
+            android:backgroundTint="@color/purple_700"/>
 
     </LinearLayout>
 </ScrollView>

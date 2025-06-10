@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.karpeko.coffee.ui.orders.favorite.FavoriteFragment"
+        android:name="com.karpeko.m.ui.orders.favorite.FavoriteFragment"
         android:label="Избранное"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/navigation_cart"
-        android:name="com.karpeko.coffee.ui.orders.cart.CartFragment"
+        android:name="com.karpeko.m.ui.orders.cart.CartFragment"
         android:label="Корзина"
         tools:layout="@layout/fragment_cart"/>
 
     <fragment
         android:id="@+id/navigation_order"
-        android:name="com.karpeko.coffee.ui.orders.order.OrderFragment"
+        android:name="com.karpeko.m.ui.orders.order.OrderFragment"
         android:label="Заказы"
         tools:layout="@layout/fragment_order" />
 
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.karpeko.coffee.ui.orders.history.HistoryFragment"
+        android:name="com.karpeko.m.ui.orders.history.HistoryFragment"
         android:label="История заказов"
         tools:layout="@layout/fragment_history" />
 </navigation>

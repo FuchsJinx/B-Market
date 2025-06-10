@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_menu"
-        android:name="com.karpeko.coffee.ui.menu.MenuFragment"
-        android:label="Меню"
+        android:name="com.karpeko.m.ui.menu.MenuFragment"
+        android:label="Каталог"
         tools:layout="@layout/fragment_menu" />
 
     <fragment
         android:id="@+id/nav_orders"
-        android:name="com.karpeko.coffee.ui.orders.order.OrderFragment"
+        android:name="com.karpeko.m.ui.orders.order.OrderFragment"
         android:label="Заказы"
         tools:layout="@layout/fragment_orders" />
 
     <fragment
         android:id="@+id/nav_account"
-        android:name="com.karpeko.coffee.ui.account.AccountFragment"
+        android:name="com.karpeko.m.ui.account.AccountFragment"
         android:label="Аккаунт"
         tools:layout="@layout/fragment_account" />
 </navigation>

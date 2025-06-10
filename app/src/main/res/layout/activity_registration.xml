@@ -34,14 +34,14 @@
         android:text="Зарегистрироваться"
         style="@style/ButtonStyle"
         android:background="@drawable/rounded_corners"
-        android:backgroundTint="@color/soft_coffee_brown"/>
+        android:backgroundTint="@color/purple_700"/>
 
     <Button
         android:id="@+id/registrationWithGoogle"
         android:text="Войти через Google"
         style="@style/ButtonStyle"
         android:background="@drawable/rounded_corners"
-        android:backgroundTint="@color/soft_coffee_brown"/>
+        android:backgroundTint="@color/purple_700"/>
 
     <TextView
         android:id="@+id/toLogin"

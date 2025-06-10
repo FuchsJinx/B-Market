@@ -1,14 +1,18 @@
+import org.gradle.kotlin.dsl.accessors.runtime.conventionPluginByName
+import org.gradle.kotlin.dsl.internal.sharedruntime.codegen.pluginEntriesFrom
+
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+//    apply { "com.google.gms.google-services" }
 }
 
 android {
-    namespace = "com.karpeko.coffee"
+    namespace = "com.karpeko.m"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.karpeko.coffee"
+        applicationId = "com.karpeko.m"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

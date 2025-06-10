@@ -32,6 +32,6 @@
             android:layout_height="wrap_content"
             android:text="Подтвердить адрес"
             android:background="@drawable/rounded_corners"
-            android:backgroundTint="@color/soft_coffee_brown"/>
+            android:backgroundTint="@color/purple_700"/>
     </LinearLayout>
 </FrameLayout>
