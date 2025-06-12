@@ -63,7 +63,8 @@
             android:layout_height="40dp"
             android:text="Выбрать на карте"
             android:drawablePadding="8dp"
-            android:backgroundTint="@color/purple_700"/>
+            android:backgroundTint="@color/purple_700"
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/tv_selected_address"
